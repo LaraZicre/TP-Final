@@ -1,0 +1,41 @@
+{
+	"textures": [
+		{
+			"image": "fondomenu_atlas.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 804,
+				"h": 604
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "fondomenu.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 802,
+						"h": 602
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 802,
+						"h": 602
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 802,
+						"h": 602
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:e9e0c7e1140deb40e9561c8799087cd4:c5c982f814b7f69d95ae7cae13c65031:facd84880471f03643da5e31e9ccf5df$"
+	}
+}
