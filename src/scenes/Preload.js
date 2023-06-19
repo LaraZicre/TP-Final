@@ -11,7 +11,6 @@ export default class Preload extends Phaser.Scene {
       // load assets
       this.load.tilemapTiledJSON("level1", "public/assets/tilemaps/map1.json");
       this.load.image("tiles", "public/assets/images/Tileset.png");
-      
       this.load.spritesheet("oso", "./public/assets/images/SpriteSheet/oso.png", {
         frameWidth: 40,
         frameHeight: 60,
@@ -20,8 +19,8 @@ export default class Preload extends Phaser.Scene {
     }
   
     create() {
-      // create game objects
-      //  Our player animations, turning, walking left and walking right.
+      // Create game objects
+      // Our player animations, turning, walking left and walking right.
       this.anims.create({
         key: "left",
         frames: this.anims.generateFrameNumbers("oso", { start: 0, end: 3 }),
