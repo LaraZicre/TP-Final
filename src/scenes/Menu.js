@@ -11,6 +11,9 @@ export default class Menu extends Phaser.Scene {
   }
 
   create() {
+
+    // FOTO BOTONES
+
     this.add.image(400, 300, "menuFondo").setScale(1.1);
 
     const button = this.add
