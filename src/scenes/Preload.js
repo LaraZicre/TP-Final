@@ -11,7 +11,7 @@ export default class Preload extends Phaser.Scene {
       // load assets
       this.load.tilemapTiledJSON("level1", "public/assets/tilemaps/map1.json");
       this.load.image("tiles", "public/assets/images/Tileset.png");
-      this.load.spritesheet("oso", "./public/assets/images/SpriteSheet/oso.png", {
+      this.load.spritesheet("oso", "./public/assets/images/SpriteSheet/oso 40x60.png", {
         frameWidth: 40,
         frameHeight: 60,
       });
