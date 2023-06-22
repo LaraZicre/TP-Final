@@ -30,14 +30,11 @@ export default class Nivel1 extends Phaser.Scene {
       const capatablero = map.createLayer("tablero", tablero, 0, 0);
       const capaobjetos = map.getObjectLayer("objetos");
       
-
       //Load object for player from tiles
       let spawntPoint = map.findObject("objetos", (obj) => obj.name === "oso");
       console.log(spawntPoint);
       //add sprite to the player
       this.oso = this.physics.add.sprite(spawntPoint.x, spawntPoint.y, "oso");
-
-      
 
       //  Player physics properties. Give the little guy a slight bounce.
       this.oso.setBounce(0.1);
@@ -52,8 +49,7 @@ export default class Nivel1 extends Phaser.Scene {
       this.physics.add.collider(this.oso, capatablero);
 
       this.cursors = this.input.keyboard.createCursorKeys();
-
-    }
+    }  
 
     update() {
 

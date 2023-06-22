@@ -22,6 +22,14 @@ export default class Menu extends Phaser.Scene {
   create() {
     this.add.image(400, 300, "menuFondo").setScale(1.1);
     //añadir boton play
+    this.playButton()
+  }
+
+  pressPlay() {
+    this.scene.start("Nivel1");
+  }
+
+  playButton() {
     //boton quieto
     const playpointer= this.add.sprite(400, 300, "play1").setInteractive();
     playpointer.on('pointerover', function (event) {
@@ -41,10 +49,6 @@ export default class Menu extends Phaser.Scene {
       playpointer.setTexture("play2");
       this.pressPlay();
     }, this);
-  }
-
-  pressPlay() {
-    this.scene.start("Nivel1");
   }
 
   update() {  
