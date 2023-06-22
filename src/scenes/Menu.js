@@ -1,50 +1,55 @@
 export default class Menu extends Phaser.Scene {
   constructor() {
-    // key of the scene
-    // the key will be used to start the scene by other scenes
+
     super("Menu");
   }
 
   preload() {
-    this.load.image("menuFondo", "./public/assets/images/fondomenu.png");
+//fondo menu
+    this.load.image("menuFondo", "public/assets/images/Menu/fondomenu.png");
+//botonplay
+    this.load.image("play1", "public/assets/images/Menu/botonplay1.png");
+    this.load.image("play2", "public/assets/images/Menu/botonplay2.png");
+    this.load.image("play3", "public/assets/images/Menu/botonplay3.png");
+//botontutorial
 
   }
 
   create() {
 
-    // FOTO BOTONES
-
     this.add.image(400, 300, "menuFondo").setScale(1.1);
+//añadir boton play
 
-    const button = this.add
-      .text(
-        this.game.config.width / 2,
-        this.game.config.height / 2 + 50,
-        "JUGAR",
-        {
-          fontFamily: "Arial",
-          fontSize: 20,
-          color: "#ffffff",
-          backgroundColor: "#000000",
-          padding: {
-            x: 16,
-            y: 8,
-          },
-        }
-      )
-      .setOrigin(0.5)
-      .setInteractive();
+    {
+//boton quieto
+    const playpointerover = this.add.image(400, 300, "play1").setInteractive();
 
-    button.on("pointerover", () => {
-      button.setStyle({ backgroundColor: "#888888" });
-    });
+    playpointerover.on('pointerover', function (event)
+    {
+     
+      
+      });
 
-    button.on("pointerout", () => {
-      button.setStyle({ backgroundColor: "#000000" });
-    });
+//mouse sobre boton
+    const playpointerout = this.add.image(400, 300, "play2").setInteractive();
 
-    button.on("pointerup", () => {
-      this.scene.start("Nivel1");
-    });
-  }
+    playpointerout.on('pointerout', function (event)
+    {
+
+      
+      
+      });
+    }
+
+//presionar boton
+    const playpointerup =  this.add.image(400, 300, "play3").setInteractive();
+
+    playpointerup.on('pointerup', function (event)
+    {
+
+    
+      this.scene.start("Nivel1");  
+      
+      });
+   }
 }
