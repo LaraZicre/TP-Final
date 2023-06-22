@@ -1,5 +1,6 @@
 import Preload from "./src/scenes/Preload.js";
 import Menu from "./src/scenes/Menu.js";
+import Tutorial from "./src/scenes/Tutorial.js";
 import Nivel1 from "./src/scenes/Nivel1.js";
 //import Nivel2 from "./src/scenes/Nivel2";
 
@@ -30,7 +31,7 @@ const config = {
   // List of scenes to load
   // Only the first scene will be shown
   // Remember to import the scene before adding it to the list
-  scene: [Preload, Menu, Nivel1],
+  scene: [Preload, Menu, Tutorial, Nivel1],
 };
 
 // Create a new Phaser game instance
