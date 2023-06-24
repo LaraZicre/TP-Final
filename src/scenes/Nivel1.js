@@ -23,6 +23,7 @@ export default class Nivel1 extends Phaser.Scene {
       const capafondo = map.createLayer("fondo", tileset, 0, 0);
       const capatiles = map.createLayer("tiles", tileset, 0, 0);
       const capaplataformas = map.createLayer("plataformas", tileset, 0, 0);
+      const capatablerofondo = map.createLayer("tablerofondo", tablero, 0, 0);
       const capatablero = map.createLayer("tablero", tablero, 0, 0);
       const capaobjetos = map.getObjectLayer("objetos");
       
@@ -52,6 +53,7 @@ export default class Nivel1 extends Phaser.Scene {
       this.physics.add.collider(this.dados, capaplataformas);
       this.physics.add.collider(this.dados, capatablero);
       this.physics.add.collider(this.dados, capatiles);
+      this.physics.add.collider(this.dados, capatablero);
       this.physics.add.collider(
         this.oso,
         this.dados,
@@ -119,9 +121,58 @@ export default class Nivel1 extends Phaser.Scene {
 
     recolectarDados(oso, dado) {
       dado.disableBody(true, true);
-      dado.setPosition(479, 449);
-      dado.enableBody(true, 479, 449, true, true);
-      console.log(dado.x, dado.y);
+
+      switch (dado.texture.key) {
+        case "d1": {
+          dado.enableBody(true, 134, 63, true, true);
+          break;
+        }
+
+        case "d2": {
+          dado.enableBody(true, 204, 63, true, true);
+          break;
+        }
+
+        case "d3": {
+          dado.enableBody(true, 273, 63, true, true);
+          break;
+        }
+
+        case "d4": {
+          dado.enableBody(true, 343, 63, true, true);
+          break;
+        }
+
+        case "d5": {
+          dado.enableBody(true, 416, 63, true, true);
+          break;
+        }
+
+        case "d6": {
+          dado.enableBody(true, 486, 63, true, true);
+          break;
+        }
+
+        case "d7": {
+          dado.enableBody(true, 555, 63, true, true);
+          break;
+        }
+
+        case "d8": {
+          dado.enableBody(true, 479, 63, true, true);
+          break;
+        }
+
+        case "d9": {
+          dado.enableBody(true, 479, 63, true, true);
+          break;
+        }
+
+        case "d10": {
+          dado.enableBody(true, 479, 63, true, true);
+          break;
+        }
+      }
     }
 
     update() {

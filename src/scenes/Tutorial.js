@@ -26,15 +26,15 @@ export default class Tutorial extends Phaser.Scene {
 
       this.anims.create({
         key: "turn",
-        frames: this.anims.generateFrameNumbers("tutoTeclas", { start: 0, end: 8 }),
+        frames: this.anims.generateFrameNumbers("tutoT0eclas", { start: 0, end: 8 }),
         frameRate: 20,
       });
 
-      var lancelot = this.add.sprite(500, 536)
+      this.add.sprite(500, 536)
 
-      lancelot.setOrigin(0.5, 1);
-        lancelot.setScale(8);
-        lancelot.play('turn')
+      //oso.setOrigin(0.5, 1);
+      //oso.setScale(8);
+      oso.play('turn')
       //this.tutoteclas.anims.play("turn");
   }
 
