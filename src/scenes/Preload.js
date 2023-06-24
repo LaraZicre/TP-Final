@@ -13,7 +13,7 @@ export default class Preload extends Phaser.Scene {
       this.load.tilemapTiledJSON("level2", "public/assets/tilemaps/map2.json");
       this.load.image("tiles", "public/assets/images/Tileset.png");
       this.load.image("tablero", "public/assets/images/Tablerotile.png");
-
+      //dados
       this.load.image("d1", "public/assets/images/Objets/dado1.png");
       this.load.image("d2", "public/assets/images/Objets/dado2.png");
       this.load.image("d3", "public/assets/images/Objets/dado3.png");
@@ -24,7 +24,7 @@ export default class Preload extends Phaser.Scene {
       this.load.image("d8", "public/assets/images/Objets/dado8.png");
       this.load.image("d9", "public/assets/images/Objets/dado9.png");
       this.load.image("d10", "public/assets/images/Objets/dado10.png");
-
+      //spritesheet
       this.load.spritesheet("oso", "./public/assets/images/SpriteSheet/oso 40x60.png", {
         frameWidth: 40,
         frameHeight: 60,
@@ -33,8 +33,7 @@ export default class Preload extends Phaser.Scene {
     }
   
     create() {
-      // Create game objects
-      // Our player animations, turning, walking left and walking right.
+      //animaciones caminar izquierda y derecha y quedarse quieto
       this.anims.create({
         key: "left",
         frames: this.anims.generateFrameNumbers("oso", { start: 0, end: 3 }),
@@ -78,7 +77,6 @@ export default class Preload extends Phaser.Scene {
 
     update() {
       this.scene.start("Menu");
-      // update game objects
     }
   }
   

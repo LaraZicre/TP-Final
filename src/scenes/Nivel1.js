@@ -1,8 +1,6 @@
 
 export default class Nivel1 extends Phaser.Scene {
     constructor() {
-      // key of the scene
-      // the key will be used to start the scene by other scenes
       super("Nivel1");
 
     }
@@ -12,8 +10,6 @@ export default class Nivel1 extends Phaser.Scene {
       this.dadoRecolectado = 0
     }
 
-    
-  
     create() {
       //Load Map
       const map = this.make.tilemap({ key: "level1" });
@@ -36,7 +32,7 @@ export default class Nivel1 extends Phaser.Scene {
       //add sprite to the player
       this.oso = this.physics.add.sprite(spawntPoint.x, spawntPoint.y, "oso");
 
-      //  Player physics properties. Give the little guy a slight bounce.
+      //Player physics properties. Give the little guy a slight bounce.
       this.oso.setBounce(0.1);
       this.oso.setCollideWorldBounds(true);
       
@@ -53,6 +49,7 @@ export default class Nivel1 extends Phaser.Scene {
 
     update() {
 
+      //ANIMS DEL OSO
       //move left
       if (this.cursors.left.isDown) {
         this.oso.setVelocityX(-160);
@@ -72,7 +69,7 @@ export default class Nivel1 extends Phaser.Scene {
       //jump
       if (this.cursors.up.isDown && this.oso.body.blocked.down) {
         this.oso.anims.play("turn");
-        this.oso.setVelocityY(-330);
+        this.oso.setVelocityY(-200);
       }
 
       //INTENTO DE HACER EL SALTO
