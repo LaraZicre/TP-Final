@@ -45,7 +45,84 @@ export default class Nivel1 extends Phaser.Scene {
       this.physics.add.collider(this.oso, capatablero);
 
       this.cursors = this.input.keyboard.createCursorKeys();
+
+      //Recolectables
+      // Create empty group of dices
+      this.dados = this.physics.add.group();
+      this.physics.add.collider(this.dados, capaplataformas);
+      this.physics.add.collider(this.dados, capatablero);
+      this.physics.add.collider(this.dados, capatiles);
+      this.physics.add.collider(
+        this.oso,
+        this.dados,
+        this.recolectarDados,
+        null,
+        this
+      );
+      //create dices
+      this.crearDados(capaobjetos, this.dados)
+      
     }  
+
+    crearDados(capaobjetos, dados) {
+      console.log(capaobjetos);
+      capaobjetos.objects.forEach((objData) => {
+        console.log(objData.name, objData.type, objData.x, objData.y);
+        const { x = 0, y = 0, name } = objData;
+        switch (name) {
+          case "dado1": {
+            //add dice to scene
+            console.log("dado agregado: ", x, y);
+            const dice1 = dados.create(x, y, "d1");
+            break;
+          }
+          case "dado2": {
+            //add dice to scene
+            console.log("dado agregado: ", x, y);
+            const dice2 = dados.create(x, y, "d2");
+            break;
+          }
+          case "dado3": {
+            //add dice to scene
+            console.log("dado agregado: ", x, y);
+            const dice3 = dados.create(x, y, "d3");
+            break;
+          }
+          case "dado4": {
+            //add dice to scene
+            console.log("dado agregado: ", x, y);
+            const dice4 = dados.create(x, y, "d4");
+            break;
+          }
+          case "dado5": {
+            //add dice to scene
+            console.log("dado agregado: ", x, y);
+            const dice5 = dados.create(x, y, "d5");
+            break;
+          }
+          case "dado6": {
+            //add dice to scene
+            console.log("dado agregado: ", x, y);
+            const dice6 = dados.create(x, y, "d6");
+            break;
+          }
+          case "dado7": {
+            //add dice to scene
+            console.log("dado agregado: ", x, y);
+            const dice7 = dados.create(x, y, "d7");
+            break;
+          }
+      }
+      });
+
+    }
+
+    recolectarDados(oso, dado) {
+      dado.disableBody(true, true);
+      dado.setPosition(479, 449);
+      dado.enableBody(true, 479, 449, true, true);
+      console.log(dado.x, dado.y);
+    }
 
     update() {
 
