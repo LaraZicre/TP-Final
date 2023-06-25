@@ -7,7 +7,7 @@ export default class Nivel1 extends Phaser.Scene {
 
     init() {
       this.nivel = 1;
-      this.dadoRecolectado = 0
+      this.cantidadDados = 0
     }
 
     create() {
@@ -50,6 +50,7 @@ export default class Nivel1 extends Phaser.Scene {
       //Recolectables
       // Create empty group of dices
       this.dados = this.physics.add.group();
+      //add colisions for the dices
       this.physics.add.collider(this.dados, capaplataformas);
       this.physics.add.collider(this.dados, capatablero);
       this.physics.add.collider(this.dados, capatiles);
@@ -122,6 +123,12 @@ export default class Nivel1 extends Phaser.Scene {
     recolectarDados(oso, dado) {
       dado.disableBody(true, true);
 
+      this.cantidadDados++
+
+      if(this.cantidadDados === 10) {
+        recolectarComida()
+      }
+
       switch (dado.texture.key) {
         case "d1": {
           dado.enableBody(true, 134, 63, true, true);
@@ -173,6 +180,12 @@ export default class Nivel1 extends Phaser.Scene {
           break;
         }
       }
+
+      
+    }
+
+    recolectarComida() {
+      //aca iria la logica para que caiga la comida y pasar al siguiente nivel al recolectarla
     }
 
     update() {
@@ -199,14 +212,10 @@ export default class Nivel1 extends Phaser.Scene {
         this.oso.anims.play("turn");
         this.oso.setVelocityY(-200);
       }
-
-      //INTENTO DE HACER EL SALTO
-
      /* else if (this.cursors.up.isDown && this.cursors.left.isDown) {
           this.oso.anims.play("jump left");
           this.oso.setVelocityY(-330);
       }
-  
       else if (this.cursors.up.isDown && this.cursors.left.isDown) {
           this.oso.anims.play("jump right");
           this.oso.setVelocityY(-330);  

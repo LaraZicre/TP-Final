@@ -24,12 +24,16 @@ export default class Preload extends Phaser.Scene {
       this.load.image("d8", "public/assets/images/Objets/dado8.png");
       this.load.image("d9", "public/assets/images/Objets/dado9.png");
       this.load.image("d10", "public/assets/images/Objets/dado10.png");
-      //spritesheet
+      //spritesheet oso
       this.load.spritesheet("oso", "./public/assets/images/SpriteSheet/oso 40x60.png", {
         frameWidth: 40,
         frameHeight: 60,
       });
-
+      this.load.spritesheet("osoJump", "public/assets/images/Tutorial/osojump 40x60.png", {frameWidth: 40,frameHeight: 60});
+      //fondo tuto
+      this.load.image("tutoFondo", "public/assets/images/Tutorial/fondotuto.png");
+      //teclas tuto
+      this.load.spritesheet("tutoTeclas", "public/assets/images/Tutorial/teclas 605x94.png", {frameWidth: 605,frameHeight: 94});
     }
   
     create() {
@@ -68,8 +72,7 @@ export default class Preload extends Phaser.Scene {
         key: "jump right",
         frames: this.anims.generateFrameNumbers("oso", { start: 14, end: 18 }),
         frameRate: 10,
-        repeat: -1,
-
+        repeat: -1,   
       }); /*/
 
     }
