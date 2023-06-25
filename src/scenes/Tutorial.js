@@ -7,9 +7,9 @@ export default class Tutorial extends Phaser.Scene {
     }
   
     create() {
-      this.add.image(400, 300, "tutoFondo");
+      this.add.image(496, 300, "tutoFondo");
 
-      const teclas = this.add.sprite(500, 500);
+      const teclas = this.add.sprite(496, 250);
       this.anims.create({
         key: "idle",
         frames: this.anims.generateFrameNumbers("tutoTeclas", { start: 0, end: 8 }),
@@ -18,7 +18,7 @@ export default class Tutorial extends Phaser.Scene {
       });
       teclas.play('idle')
 
-      const osoLeft = this.add.sprite(200, 300);
+      const osoLeft = this.add.sprite(240, 510);
       this.anims.create({
         key: "left",
         frames: this.anims.generateFrameNumbers("oso", { start: 0, end: 3 }),
@@ -27,7 +27,7 @@ export default class Tutorial extends Phaser.Scene {
       });
       osoLeft.play('left', true)
 
-      const osoRight = this.add.sprite(850, 300)
+      const osoRight = this.add.sprite(750, 510)
       this.anims.create({
         key: "right",
         frames: this.anims.generateFrameNumbers("oso", { start: 0, end: 3 }),
@@ -36,7 +36,7 @@ export default class Tutorial extends Phaser.Scene {
       });  
       osoRight.play('right', true)
 
-      const osoJump = this.add.sprite(400, 300)
+      const osoJump = this.add.sprite(496, 510)
       this.anims.create({
         key: "jump",
         frames: this.anims.generateFrameNumbers("osoJump", { start: 0, end: 7 }),

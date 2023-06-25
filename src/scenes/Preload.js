@@ -11,6 +11,7 @@ export default class Preload extends Phaser.Scene {
       // load assets
       this.load.tilemapTiledJSON("level1", "public/assets/tilemaps/map1.json");
       this.load.tilemapTiledJSON("level2", "public/assets/tilemaps/map2.json");
+      this.load.tilemapTiledJSON("level3", "public/assets/tilemaps/map3.json");
       this.load.image("tiles", "public/assets/images/Tileset.png");
       this.load.image("tablero", "public/assets/images/Tablerotile.png");
       //dados
@@ -33,7 +34,7 @@ export default class Preload extends Phaser.Scene {
       //fondo tuto
       this.load.image("tutoFondo", "public/assets/images/Tutorial/fondotuto.png");
       //teclas tuto
-      this.load.spritesheet("tutoTeclas", "public/assets/images/Tutorial/teclas 605x94.png", {frameWidth: 605,frameHeight: 94});
+      this.load.spritesheet("tutoTeclas", "public/assets/images/Tutorial/teclas 736x160.png", {frameWidth: 736,frameHeight: 160});
     }
   
     create() {

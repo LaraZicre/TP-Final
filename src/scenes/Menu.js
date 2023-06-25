@@ -22,7 +22,7 @@ export default class Menu extends Phaser.Scene {
   }
 
   create() {
-    this.add.image(400, 300, "menuFondo").setScale(1.1);
+    this.add.image(496, 300, "menuFondo").setScale(1.1);
 
     //añadir boton tutorial
     this.tutorialButton()
@@ -37,7 +37,7 @@ export default class Menu extends Phaser.Scene {
 
   playButton() {
     //boton quieto
-    const playpointer= this.add.sprite(550, 300, "play1").setInteractive();
+    const playpointer= this.add.sprite(660, 300, "play1").setInteractive();
     playpointer.on('pointerover', function (event) {
       this.setTexture("play2");
     });
@@ -64,7 +64,7 @@ export default class Menu extends Phaser.Scene {
 
   tutorialButton(){
     //boton quieto
-    const tutopointer= this.add.sprite(250, 300, "tuto1").setInteractive();
+    const tutopointer= this.add.sprite(300, 300, "tuto1").setInteractive();
     tutopointer.on('pointerover', function (event) {
       this.setTexture("tuto2");
     });

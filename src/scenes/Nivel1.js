@@ -115,6 +115,24 @@ export default class Nivel1 extends Phaser.Scene {
             const dice7 = dados.create(x, y, "d7");
             break;
           }
+          case "dado8": {
+            //add dice to scene
+            console.log("dado agregado: ", x, y);
+            const dice8 = dados.create(x, y, "d8");
+            break;
+          }
+          case "dado9": {
+            //add dice to scene
+            console.log("dado agregado: ", x, y);
+            const dice9 = dados.create(x, y, "d9");
+            break;
+          }
+          case "dado10": {
+            //add dice to scene
+            console.log("dado agregado: ", x, y);
+            const dice10 = dados.create(x, y, "d10");
+            break;
+          }
       }
       });
 
@@ -125,9 +143,9 @@ export default class Nivel1 extends Phaser.Scene {
 
       this.cantidadDados++
 
-      if(this.cantidadDados === 10) {
-        recolectarComida()
-      }
+      //if(this.cantidadDados === 10) {
+       // recolectarComida()
+      //}
 
       switch (dado.texture.key) {
         case "d1": {
@@ -166,17 +184,17 @@ export default class Nivel1 extends Phaser.Scene {
         }
 
         case "d8": {
-          dado.enableBody(true, 479, 63, true, true);
+          dado.enableBody(true, 625, 63, true, true);
           break;
         }
 
         case "d9": {
-          dado.enableBody(true, 479, 63, true, true);
+          dado.enableBody(true, 695, 63, true, true);
           break;
         }
 
         case "d10": {
-          dado.enableBody(true, 479, 63, true, true);
+          dado.enableBody(true, 765, 63, true, true);
           break;
         }
       }
@@ -184,9 +202,9 @@ export default class Nivel1 extends Phaser.Scene {
       
     }
 
-    recolectarComida() {
+    //recolectarComida() {
       //aca iria la logica para que caiga la comida y pasar al siguiente nivel al recolectarla
-    }
+    //}
 
     update() {
 
