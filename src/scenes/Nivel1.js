@@ -36,6 +36,13 @@ export default class Nivel1 extends Phaser.Scene {
       //Player physics properties. Give the little guy a slight bounce.
       this.oso.setBounce(0.1);
       this.oso.setCollideWorldBounds(true);
+
+      //
+      spawntPoint = map.findObject("objetos", (obj) => obj.name === "medialuna");
+      console.log(spawntPoint);
+
+      this.medialuna = this.physics.add.sprite(spawntPoint.x, spawntPoint.y, "desayuno");
+
       
       //add colision for tile and platforms with the player
       capatiles.setCollisionByProperty({ colision: true });
@@ -54,18 +61,34 @@ export default class Nivel1 extends Phaser.Scene {
       this.physics.add.collider(this.dados, capaplataformas);
       this.physics.add.collider(this.dados, capatablero);
       this.physics.add.collider(this.dados, capatiles);
-      this.physics.add.collider(this.dados, capatablero);
       this.physics.add.collider(
         this.oso,
         this.dados,
         this.recolectarDados,
         null,
-        this
+        this,
+        capatablero,
+        this.medialuna
       );
       //create dices
       this.crearDados(capaobjetos, this.dados)
-      
+
+
+      this.medialuna
+      // colision
+      this.physics.add.collider(this.medialuna, capatablero);
+      this.physics.add.collider(this.medialuna, capatiles);
+      this.physics.add.collider(
+        this.oso,
+        this.medialuna,
+        this.recolectarPremio,
+        null,
+        this
+    
+      ); 
+    
     }  
+ 
 
     crearDados(capaobjetos, dados) {
       console.log(capaobjetos);
@@ -138,73 +161,81 @@ export default class Nivel1 extends Phaser.Scene {
 
     }
 
-    recolectarDados(oso, dado) {
+
+    recolectarDados(oso, dado, capatablero, medialuna) {
       dado.disableBody(true, true);
 
       this.cantidadDados++
 
-      //if(this.cantidadDados === 10) {
-       // recolectarComida()
-      //}
+      if(this.cantidadDados === 10) {
+        this.recolectarPremio
+
+      }
 
       switch (dado.texture.key) {
         case "d1": {
-          dado.enableBody(true, 134, 63, true, true);
+          dado.enableBody(true, 129, 38, true, true);
           break;
         }
 
         case "d2": {
-          dado.enableBody(true, 204, 63, true, true);
+          dado.enableBody(true, 204, 38, true, true);
           break;
         }
 
         case "d3": {
-          dado.enableBody(true, 273, 63, true, true);
+          dado.enableBody(true, 273, 38, true, true);
           break;
         }
 
         case "d4": {
-          dado.enableBody(true, 343, 63, true, true);
+          dado.enableBody(true, 343, 38, true, true);
           break;
         }
 
         case "d5": {
-          dado.enableBody(true, 416, 63, true, true);
+          dado.enableBody(true, 416, 38, true, true);
           break;
         }
 
         case "d6": {
-          dado.enableBody(true, 486, 63, true, true);
+          dado.enableBody(true, 486, 38, true, true);
           break;
         }
 
         case "d7": {
-          dado.enableBody(true, 555, 63, true, true);
+          dado.enableBody(true, 555, 38, true, true);
           break;
         }
 
         case "d8": {
-          dado.enableBody(true, 625, 63, true, true);
+          dado.enableBody(true, 625, 38, true, true);
           break;
         }
 
         case "d9": {
-          dado.enableBody(true, 695, 63, true, true);
+          dado.enableBody(true, 695, 38, true, true);
           break;
         }
 
         case "d10": {
-          dado.enableBody(true, 765, 63, true, true);
+          dado.enableBody(true, 765, 38, true, true);
           break;
         }
       }
 
       
+
     }
 
-    //recolectarComida() {
-      //aca iria la logica para que caiga la comida y pasar al siguiente nivel al recolectarla
-    //}
+    recolectarPremio(medialuna) {
+
+        // Disable collision by setting the physics body to a static object
+        medialuna.body.setEnable(false);
+        medialuna.body.setCollideWorldBounds(false);
+        medialuna.body.setVelocity(0, 0); // Set velocity to zero to prevent any movement    
+   //aca iria la logica para que caiga la comida y pasar al siguiente nivel al recolectarla
+    }
 
     update() {
 
