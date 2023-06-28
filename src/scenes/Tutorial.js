@@ -5,9 +5,50 @@ export default class Tutorial extends Phaser.Scene {
       super("Tutorial");
       
     }
-  
+ 
+    preload(){
+      //tecla atras
+      this.load.image("atras1", "public/assets/images/Buttons/botonatras1.png");
+      this.load.image("atras2", "public/assets/images/Buttons/botonatras2.png");
+    }
+
+    init(){
+
+    }
+
     create() {
       this.add.image(496, 300, "tutoFondo");
+
+      //añadir boton atras
+      this.backButton()
+    }
+  
+    pressBack() {
+      this.scene.start("Menu");
+    }
+  
+    backButton() {
+      //boton quieto
+      const backpointer= this.add.sprite(45, 55, "atras1").setInteractive();
+      backpointer.on('pointerover', function (event) {
+        this.setTexture("atras2");
+      });
+      //mouse sobre boton
+      backpointer.on('pointerout', function (event) {
+        this.setTexture("atras1");
+      });
+      //presionar boton
+      backpointer.on('pointerdown', function (event) {
+        backpointer.setTexture("atras2");
+        
+      });
+      //soltar boton
+      backpointer.on('pointerup', function (event) {
+        backpointer.setTexture("atras1");
+        this.pressBack();
+      }, this);
+  
+    
 
       const teclas = this.add.sprite(496, 250);
       this.anims.create({

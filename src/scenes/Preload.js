@@ -37,6 +37,10 @@ export default class Preload extends Phaser.Scene {
       this.load.image("tutoFondo", "public/assets/images/Tutorial/fondotuto.png");
       //teclas tuto
       this.load.spritesheet("tutoTeclas", "public/assets/images/Tutorial/teclas 736x160.png", {frameWidth: 736,frameHeight: 160});
+      //tecla atras
+      this.load.image("atras1", "public/assets/images/Buttons/botonatras1.png");
+      this.load.image("atras2", "public/assets/images/Buttons/botonatras2.png");
+
     }
   
     create() {
@@ -82,7 +86,7 @@ export default class Preload extends Phaser.Scene {
   
 
     update() {
-      this.scene.start("Menu");
+      this.scene.start("Intro");
     }
   }
   

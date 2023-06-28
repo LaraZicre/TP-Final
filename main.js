@@ -1,4 +1,5 @@
 import Preload from "./src/scenes/Preload.js";
+import Intro from "./src/scenes/Intro.js";
 import Menu from "./src/scenes/Menu.js";
 import Tutorial from "./src/scenes/Tutorial.js";
 import Nivel1 from "./src/scenes/Nivel1.js";
@@ -29,7 +30,7 @@ const config = {
     },
   },
 
-  scene: [Preload, Menu, Tutorial, Nivel1],
+  scene: [Preload, Intro, Menu, Tutorial, Nivel1],
 };
 
 window.game = new Phaser.Game(config);
