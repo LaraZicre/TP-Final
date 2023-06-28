@@ -71,6 +71,7 @@ export default class Nivel1 extends Phaser.Scene {
         this.recolectarDados,
         null,
         this,
+        this.capapiso
 
       );
       //create dices
@@ -81,15 +82,6 @@ export default class Nivel1 extends Phaser.Scene {
       this.physics.add.collider(this.medialuna, capatablero);
       this.physics.add.collider(this.medialuna, capatiles);
       this.physics.add.collider(this.medialuna, capapiso);
-      this.physics.add.collider(
-        this.oso,
-        this.medialuna,
-        this.recolectarPremio,
-        null,
-        this
-    
-      ); 
-
     }  
 
 
@@ -164,20 +156,15 @@ export default class Nivel1 extends Phaser.Scene {
 
     }
 
-
-    recolectarDados(oso, dado) {
+    recolectarDados(oso, dado, capapiso) {
+      console.log("piso: " + capapiso);
       dado.disableBody(true, true);
 
       this.cantidadDados++
 
-     // if (this.cantidadDados === 10) {
-        //pisocaja.setCollision(false);
-        // this.pisocaja.setCollisionByProperty({ colision: false });
-      //}
-
- 
-
-     // }
+      if (this.cantidadDados === 10) {
+       this.recolectarPremio(capapiso)
+      }
 
       switch (dado.texture.key) {
         case "d1": {
@@ -230,6 +217,10 @@ export default class Nivel1 extends Phaser.Scene {
           break;
         }
       }
+    }
+
+    recolectarPremio(oso, medialuna){
+
     }
 
   
