@@ -25,6 +25,7 @@ export default class Nivel1 extends Phaser.Scene {
       const capaplataformas = map.createLayer("plataformas", tileset, 0, 0);
       const capatablerofondo = map.createLayer("tablerofondo", tablero, 0, 0);
       const capatablero = map.createLayer("tablero", tablero, 0, 0);
+      const capapiso = map.createLayer("pisocaja", tablero, 0, 0);
       const capaobjetos = map.getObjectLayer("objetos");
       
       //Load object for player from tiles
@@ -42,17 +43,20 @@ export default class Nivel1 extends Phaser.Scene {
       console.log(spawntPoint);
 
       this.medialuna = this.physics.add.sprite(spawntPoint.x, spawntPoint.y, "desayuno");
-
       
       //add colision for tile and platforms with the player
       capatiles.setCollisionByProperty({ colision: true });
       capaplataformas.setCollisionByProperty({ colision: true });
       capatablero.setCollisionByProperty({ colision: true });
+      capapiso.setCollisionByProperty({ colision: true });
       this.physics.add.collider(this.oso, capatiles);
       this.physics.add.collider(this.oso, capaplataformas);
       this.physics.add.collider(this.oso, capatablero);
+      this.physics.add.collider(this.oso, capapiso);
 
       this.cursors = this.input.keyboard.createCursorKeys();
+
+   
 
       //Recolectables
       // Create empty group of dices
@@ -67,17 +71,16 @@ export default class Nivel1 extends Phaser.Scene {
         this.recolectarDados,
         null,
         this,
-        capatablero,
-        this.medialuna
+
       );
       //create dices
       this.crearDados(capaobjetos, this.dados)
-
-
+      //medialuna fisicas
       this.medialuna
       // colision
       this.physics.add.collider(this.medialuna, capatablero);
       this.physics.add.collider(this.medialuna, capatiles);
+      this.physics.add.collider(this.medialuna, capapiso);
       this.physics.add.collider(
         this.oso,
         this.medialuna,
@@ -86,9 +89,9 @@ export default class Nivel1 extends Phaser.Scene {
         this
     
       ); 
-    
+
     }  
- 
+
 
     crearDados(capaobjetos, dados) {
       console.log(capaobjetos);
@@ -162,15 +165,19 @@ export default class Nivel1 extends Phaser.Scene {
     }
 
 
-    recolectarDados(oso, dado, capatablero, medialuna) {
+    recolectarDados(oso, dado) {
       dado.disableBody(true, true);
 
       this.cantidadDados++
 
-      if(this.cantidadDados === 10) {
-        this.recolectarPremio
+     // if (this.cantidadDados === 10) {
+        //pisocaja.setCollision(false);
+        // this.pisocaja.setCollisionByProperty({ colision: false });
+      //}
 
-      }
+ 
+
+     // }
 
       switch (dado.texture.key) {
         case "d1": {
@@ -179,64 +186,53 @@ export default class Nivel1 extends Phaser.Scene {
         }
 
         case "d2": {
-          dado.enableBody(true, 204, 38, true, true);
+          dado.enableBody(true, 196, 38, true, true);
           break;
         }
 
         case "d3": {
-          dado.enableBody(true, 273, 38, true, true);
+          dado.enableBody(true, 263, 38, true, true);
           break;
         }
 
         case "d4": {
-          dado.enableBody(true, 343, 38, true, true);
+          dado.enableBody(true, 332, 38, true, true);
           break;
         }
 
         case "d5": {
-          dado.enableBody(true, 416, 38, true, true);
+          dado.enableBody(true, 400, 38, true, true);
           break;
         }
 
         case "d6": {
-          dado.enableBody(true, 486, 38, true, true);
+          dado.enableBody(true, 468, 38, true, true);
           break;
         }
 
         case "d7": {
-          dado.enableBody(true, 555, 38, true, true);
+          dado.enableBody(true, 536, 38, true, true);
           break;
         }
 
         case "d8": {
-          dado.enableBody(true, 625, 38, true, true);
+          dado.enableBody(true, 604, 38, true, true);
           break;
         }
 
         case "d9": {
-          dado.enableBody(true, 695, 38, true, true);
+          dado.enableBody(true, 671, 38, true, true);
           break;
         }
 
         case "d10": {
-          dado.enableBody(true, 765, 38, true, true);
+          dado.enableBody(true, 740, 38, true, true);
           break;
         }
       }
-
-      
-
     }
 
-    recolectarPremio(medialuna) {
-
-        // Disable collision by setting the physics body to a static object
-        medialuna.body.setEnable(false);
-        medialuna.body.setCollideWorldBounds(false);
-        medialuna.body.setVelocity(0, 0); // Set velocity to zero to prevent any movement    
-   //aca iria la logica para que caiga la comida y pasar al siguiente nivel al recolectarla
-    }
-
+  
     update() {
 
       //ANIMS DEL OSO
@@ -272,8 +268,11 @@ export default class Nivel1 extends Phaser.Scene {
       }
       //*/
 
-
+      
+      }
     }
-  }
+  
+
+
 
   
