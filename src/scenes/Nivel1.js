@@ -7,7 +7,6 @@ export default class Nivel1 extends Phaser.Scene {
 
     init() {
       this.nivel = 1;
-      this.cantidadDados = 0
     }
 
     create() {
@@ -43,6 +42,9 @@ export default class Nivel1 extends Phaser.Scene {
       console.log(spawntPoint);
 
       this.medialuna = this.physics.add.sprite(spawntPoint.x, spawntPoint.y, "desayuno");
+
+      const ordenDados = ["d1", "d2", "d3", "d4", "d5", "d6", "d7", "d8", "d9", "d10"];
+      let dadosOrdenados = 0;
       
       //add colision for tile and platforms with the player
       capatiles.setCollisionByProperty({ colision: true });
@@ -55,8 +57,6 @@ export default class Nivel1 extends Phaser.Scene {
       this.physics.add.collider(this.oso, capapiso);
 
       this.cursors = this.input.keyboard.createCursorKeys();
-
-   
 
       //Recolectables
       // Create empty group of dices
@@ -83,6 +83,7 @@ export default class Nivel1 extends Phaser.Scene {
       this.physics.add.collider(this.medialuna, capatiles);
       this.physics.add.collider(this.medialuna, capapiso);
     }  
+
 
 
     crearDados(capaobjetos, dados) {
@@ -156,7 +157,7 @@ export default class Nivel1 extends Phaser.Scene {
 
     }
 
-    recolectarDados(oso, dado, capapiso) {
+    /*recolectarDados(oso, dado, capapiso) {
       console.log("piso: " + capapiso);
       dado.disableBody(true, true);
 
@@ -165,6 +166,41 @@ export default class Nivel1 extends Phaser.Scene {
       if (this.cantidadDados === 10) {
        this.recolectarPremio(capapiso)
       }
+*/
+
+      tirarMedialuna(){
+        this.scene.start("Nivel2");
+      }      
+
+      reintentar(){
+        this.scene.start("NivelPerdido");
+      }      
+
+
+      
+      //condicion ganar perder
+      recolectarDados(oso, dados, ordenDados, dadosOrdenados){
+        console.log(ordenDados);
+        const dadoEsperado = ordenDados[dadosOrdenados];
+
+        if (dados === dadoEsperado){
+
+          dadosOrdenados++;
+        }
+
+        if (dadosOrdenados === ordenDados.length){
+          this.tirarMedialuna();
+
+        }
+
+        else{
+          this.reintentar();
+
+      }
+    
+
+      
+
 
       switch (dado.texture.key) {
         case "d1": {
@@ -220,8 +256,9 @@ export default class Nivel1 extends Phaser.Scene {
     }
 
     recolectarPremio(oso, medialuna){
-
     }
+
+
 
   
     update() {

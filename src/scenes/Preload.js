@@ -13,7 +13,7 @@ export default class Preload extends Phaser.Scene {
       this.load.tilemapTiledJSON("level2", "public/assets/tilemaps/map2.json");
       this.load.tilemapTiledJSON("level3", "public/assets/tilemaps/map3.json");
       this.load.image("tiles", "public/assets/images/Tileset.png");
-      this.load.image("tablero", "public/assets/images/Tablerotile.png");
+      this.load.image("tablero", "public/assets/images/Interfaz/Tablerotile.png");
       //dados
       this.load.image("d1", "public/assets/images/Objets/dado1.png");
       this.load.image("d2", "public/assets/images/Objets/dado2.png");
@@ -32,7 +32,7 @@ export default class Preload extends Phaser.Scene {
         frameWidth: 40,
         frameHeight: 60,
       });
-      this.load.spritesheet("osoJump", "public/assets/images/Tutorial/osojump 40x60.png", {frameWidth: 40,frameHeight: 60});
+      this.load.spritesheet("osoJump", "public/assets/images/Tutorial/osojump 40x120.png", {frameWidth: 40,frameHeight: 120});
       //fondo tuto
       this.load.image("tutoFondo", "public/assets/images/Tutorial/fondotuto.png");
       //teclas tuto
@@ -40,6 +40,7 @@ export default class Preload extends Phaser.Scene {
       //tecla atras
       this.load.image("atras1", "public/assets/images/Buttons/botonatras1.png");
       this.load.image("atras2", "public/assets/images/Buttons/botonatras2.png");
+      
 
     }
   

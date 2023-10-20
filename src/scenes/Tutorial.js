@@ -77,11 +77,11 @@ export default class Tutorial extends Phaser.Scene {
       });  
       osoRight.play('right', true)
 
-      const osoJump = this.add.sprite(496, 510)
+      const osoJump = this.add.sprite(496, 480)
       this.anims.create({
         key: "jump",
-        frames: this.anims.generateFrameNumbers("osoJump", { start: 0, end: 7 }),
-        frameRate: 7,
+        frames: this.anims.generateFrameNumbers("osoJump", { start: 0, end: 54 }),
+        frameRate: 20,
         repeat: -1,
       });  
       osoJump.play('jump', true)
