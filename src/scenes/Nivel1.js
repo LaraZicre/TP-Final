@@ -157,16 +157,16 @@ export default class Nivel1 extends Phaser.Scene {
 
     }
 
-    /*recolectarDados(oso, dado, capapiso) {
-      console.log("piso: " + capapiso);
-      dado.disableBody(true, true);
+      recolectarDados(oso, dado, capapiso) {
+        console.log("piso: " + capapiso);
+        dado.disableBody(true, true);
 
-      this.cantidadDados++
+        this.cantidadDados++
 
-      if (this.cantidadDados === 10) {
-       this.recolectarPremio(capapiso)
+        if (this.cantidadDados === 10) {
+        this.recolectarPremio(capapiso)
+        }
       }
-*/
 
       tirarMedialuna(){
         this.scene.start("Nivel2");

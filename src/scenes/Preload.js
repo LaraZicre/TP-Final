@@ -25,6 +25,11 @@ export default class Preload extends Phaser.Scene {
       this.load.image("d8", "public/assets/images/Objets/dado8.png");
       this.load.image("d9", "public/assets/images/Objets/dado9.png");
       this.load.image("d10", "public/assets/images/Objets/dado10.png");
+      //cartas
+      this.load.image("tierra", "public/assets/images/Objets 1/carta-tierra.png");
+      this.load.image("agua", "public/assets/images/Objets 1/carta-agua.png");
+      this.load.image("fuego", "public/assets/images/Objets 1/carta-fuego.png");
+      this.load.image("aire", "public/assets/images/Objets 1/carta-aire.png");
       //premio nivel 1
       this.load.image("desayuno", "public/assets/images/Food/medialuna.png");
       //spritesheet oso

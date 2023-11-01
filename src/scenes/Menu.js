@@ -32,7 +32,7 @@ export default class Menu extends Phaser.Scene {
   }
 
   pressPlay() {
-    this.scene.start("Nivel1");
+    this.scene.start("Nivel2");
   }
 
   playButton() {
