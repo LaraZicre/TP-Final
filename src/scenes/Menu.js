@@ -31,58 +31,58 @@ export default class Menu extends Phaser.Scene {
     this.playButton()
   }
 
-  pressPlay() {
-    this.scene.start("Nivel2");
-  }
+
 
   playButton() {
     //boton quieto
     const playpointer= this.add.sprite(260, 300, "play1").setInteractive();
-    playpointer.on('pointerover', function (event) {
-      this.setTexture("play2");
-    });
-    //mouse sobre boton
-    playpointer.on('pointerout', function (event) {
-      this.setTexture("play1");
-    });
-    //presionar boton
-    playpointer.on('pointerdown', function (event) {
-      playpointer.setTexture("play3");
-      
-    });
     //soltar boton
-    playpointer.on('pointerup', function (event) {
+    playpointer.on('pointerup', () => {
       playpointer.setTexture("play2");
-      this.pressPlay();
-    }, this);
+      this.scene.start("Nivel1");
+    })
+    playpointer.on('pointerover', () => {
+      playpointer.setTexture("play2");
+    })
+    //mouse sobre boton
+    playpointer.on('pointerout', function () {
+        playpointer.setTexture("play1");
+      })
+    //presionar boton
+    playpointer.on('pointerdown', () => {
+      playpointer.setTexture("play3");  
+    })
+
 
   }
 
-  pressTuto() {
-    this.scene.start("Tutorial");
-  }
 
   tutorialButton(){
     //boton quieto
     const tutopointer= this.add.sprite(50, 560, "tuto1").setInteractive();
-    tutopointer.on('pointerover', function (event) {
+    tutopointer.on('pointerover', () => {
       this.setTexture("tuto2");
     });
+
+    //soltar boton
+    tutopointer.on('pointerup', () => {
+      tutopointer.setTexture("tuto2");
+      this.pressTuto();
+    }, this);
     //mouse sobre boton
-    tutopointer.on('pointerout', function (event) {
+    tutopointer.on('pointerout', () => {
       this.setTexture("tuto1");
     });
     //presionar boton
-    tutopointer.on('pointerdown', function (event) {
+    tutopointer.on('pointerdown', () => {
       tutopointer.setTexture("tuto3");
       
     });
     //soltar boton
-    tutopointer.on('pointerup', function (event) {
+    tutopointer.on('pointerup', () => {
       tutopointer.setTexture("tuto2");
-      this.pressTuto();
+      this.scene.start("Tutorial");
     }, this);
-
 
   }
 

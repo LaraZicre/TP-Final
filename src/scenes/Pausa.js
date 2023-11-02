@@ -7,7 +7,7 @@ export default class Pausa extends Phaser.Scene {
     }
   
     init() {
-        
+        nivelActual = data.NivelActual 
     }
 
     create() {

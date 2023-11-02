@@ -19,36 +19,27 @@ export default class Tutorial extends Phaser.Scene {
     create() {
       this.add.image(496, 300, "tutoFondo");
 
-      //añadir boton atras
-      this.backButton()
-    }
-  
-    pressBack() {
-      this.scene.start("Menu");
-    }
-  
-    backButton() {
-      //boton quieto
-      const backpointer= this.add.sprite(45, 55, "atras1").setInteractive();
-      backpointer.on('pointerover', function (event) {
-        this.setTexture("atras2");
+      // Boton volver
+      const volverButton = this.add.sprite(45, 55, "atras1").setInteractive();
+      // Agrega eventos de clic a los botones.
+      volverButton.on("pointerover", () => 
+          {volverButton.setTexture("atras2"); 
       });
-      //mouse sobre boton
-      backpointer.on('pointerout', function (event) {
-        this.setTexture("atras1");
+
+      volverButton.on("pointerout", () => 
+          {volverButton.setTexture("atras1"); 
       });
-      //presionar boton
-      backpointer.on('pointerdown', function (event) {
-        backpointer.setTexture("atras2");
-        
+
+      volverButton.on("pointerdown", () => 
+          {volverButton.setTexture("atras2"); 
       });
-      //soltar boton
-      backpointer.on('pointerup', function (event) {
-        backpointer.setTexture("atras1");
-        this.pressBack();
-      }, this);
-  
-    
+      
+      volverButton.on("pointerup", () => 
+          {volverButton.setTexture("atras1"); 
+          this.scene.start("Menu");
+      });
+
+      // Sprites
 
       const teclas = this.add.sprite(496, 250);
       this.anims.create({
