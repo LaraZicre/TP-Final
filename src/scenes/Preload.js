@@ -53,6 +53,9 @@ export default class Preload extends Phaser.Scene {
       //boton pausa
       this.load.image("pausa1", "public/assets/images/Buttons/botonpausa1.png");
       this.load.image("pausa2", "public/assets/images/Buttons/botonpausa2.png");
+      //boton menu
+      this.load.image("menu1", "public/assets/images/Buttons/botonmenu1.png");
+      this.load.image("menu2", "public/assets/images/Buttons/botonmenu2.png");
 
     }
   

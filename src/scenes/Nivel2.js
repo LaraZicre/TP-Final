@@ -8,6 +8,7 @@ export default class Nivel1 extends Phaser.Scene {
   
     init() {
       this.nivel = 2;
+
     
     }
   
@@ -49,36 +50,28 @@ export default class Nivel1 extends Phaser.Scene {
 
       this.cursors = this.input.keyboard.createCursorKeys();
 
-      //añadir boton play
-      this.pausaButton()
 
-      }
+      const pausaButton = this.add.sprite(45, 55, "pausa1").setInteractive();
+      // Agrega eventos de clic a los botones.
+      pausaButton.on("pointerover", () => 
+              {pausaButton.setTexture("pausa2"); 
+          });
 
-      pressPausa() {
-        this.scene.launch('Pausa')
-      }
-    
-      pausaButton() {
-        //boton quieto
-          const pausapointer= this.add.sprite(45, 55, "pausa1").setInteractive();
-          pausapointer.on('pointerover', function (event) {
-            this.setTexture("pausa2");
+          pausaButton.on("pointerout", () => 
+              {pausaButton.setTexture("pausa1"); 
           });
-          //mouse sobre boton
-          pausapointer.on('pointerout', function (event) {
-            this.setTexture("pausa2");
+
+          pausaButton.on("pointerdown", () => 
+              {pausaButton.setTexture("pausa2"); 
           });
-          //presionar boton
-          pausapointer.on('pointerdown', function (event) {
-            pausapointer.setTexture("pausa1");
-            
+          
+          pausaButton.on("pointerup", () => 
+              {pausaButton.setTexture("pausa1"); 
+                this.scene.launch("Pausa")
+                
           });
-          //soltar boton
-          pausapointer.on('pointerup', function (event) {
-            pausapointer.setTexture("pausa1");
-            this.pressPausa();
-          }, this);
-      }
+
+        }
 
       update(){
 
