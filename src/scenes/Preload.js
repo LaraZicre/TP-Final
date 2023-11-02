@@ -30,6 +30,7 @@ export default class Preload extends Phaser.Scene {
       this.load.image("agua", "public/assets/images/Objets 1/carta-agua.png");
       this.load.image("fuego", "public/assets/images/Objets 1/carta-fuego.png");
       this.load.image("aire", "public/assets/images/Objets 1/carta-aire.png");
+      this.load.image("aire", "public/assets/images/Objets 1/carta-volteada.png");
       //premio nivel 1
       this.load.image("desayuno", "public/assets/images/Food/medialuna.png");
       //spritesheet oso
@@ -40,12 +41,18 @@ export default class Preload extends Phaser.Scene {
       this.load.spritesheet("osoJump", "public/assets/images/Tutorial/osojump 40x120.png", {frameWidth: 40,frameHeight: 120});
       //fondo tuto
       this.load.image("tutoFondo", "public/assets/images/Tutorial/fondotuto.png");
+      //pop ups
+      this.load.image("ganar", "public/assets/images/PopUps/popupganar.png");
+      this.load.image("perder", "public/assets/images/PopUps/popupperder.png");
+      this.load.image("pausa", "public/assets/images/PopUps/popuppausa.png");
       //teclas tuto
       this.load.spritesheet("tutoTeclas", "public/assets/images/Tutorial/teclas 736x160.png", {frameWidth: 736,frameHeight: 160});
-      //tecla atras
+      //boton atras
       this.load.image("atras1", "public/assets/images/Buttons/botonatras1.png");
       this.load.image("atras2", "public/assets/images/Buttons/botonatras2.png");
-      
+      //boton pausa
+      this.load.image("pausa1", "public/assets/images/Buttons/botonpausa1.png");
+      this.load.image("pausa2", "public/assets/images/Buttons/botonpausa2.png");
 
     }
   
@@ -70,23 +77,6 @@ export default class Preload extends Phaser.Scene {
         frameRate: 10,
         repeat: -1,
       });  
-
-      //INTENTO DE HACER EL SALTO
-      /*/
-      this.anims.create({
-        key: "jump left",
-        frames: this.anims.generateFrameNumbers("oso", { start: 9, end: 13 }),
-        frameRate: 10,
-        repeat: -1,
-
-      });
-
-      this.anims.create({
-        key: "jump right",
-        frames: this.anims.generateFrameNumbers("oso", { start: 14, end: 18 }),
-        frameRate: 10,
-        repeat: -1,   
-      }); /*/
 
     }
   

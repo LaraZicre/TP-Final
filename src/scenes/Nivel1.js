@@ -285,20 +285,10 @@ export default class Nivel1 extends Phaser.Scene {
         this.oso.anims.play("turn");
         this.oso.setVelocityY(-200);
       }
-     /* else if (this.cursors.up.isDown && this.cursors.left.isDown) {
-          this.oso.anims.play("jump left");
-          this.oso.setVelocityY(-330);
-      }
-      else if (this.cursors.up.isDown && this.cursors.left.isDown) {
-          this.oso.anims.play("jump right");
-          this.oso.setVelocityY(-330);  
-          
-      }
-      //*/
-
-      
-      }
+ 
     }
+    
+ }
   
 
 
