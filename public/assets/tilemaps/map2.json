@@ -1,4 +1,11 @@
 { "compressionlevel":-1,
+ "editorsettings":
+    {
+     "export":
+        {
+         "format":"json"
+        }
+    },
  "height":19,
  "infinite":false,
  "layers":[
@@ -159,8 +166,20 @@
          "objects":[
                 {
                  "height":0,
+                 "id":10,
+                 "name":"oso",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":508,
+                 "y":496
+                }, 
+                {
+                 "height":0,
                  "id":1,
-                 "name":"aire2",
+                 "name":"aire",
                  "point":true,
                  "rotation":0,
                  "type":"",
@@ -172,7 +191,7 @@
                 {
                  "height":0,
                  "id":2,
-                 "name":"aire1",
+                 "name":"aire",
                  "point":true,
                  "rotation":0,
                  "type":"",
@@ -184,7 +203,7 @@
                 {
                  "height":0,
                  "id":3,
-                 "name":"fuego2",
+                 "name":"fuego",
                  "point":true,
                  "rotation":0,
                  "type":"",
@@ -196,7 +215,7 @@
                 {
                  "height":0,
                  "id":4,
-                 "name":"fuego1",
+                 "name":"fuego",
                  "point":true,
                  "rotation":0,
                  "type":"",
@@ -208,7 +227,7 @@
                 {
                  "height":0,
                  "id":5,
-                 "name":"agua2",
+                 "name":"agua",
                  "point":true,
                  "rotation":0,
                  "type":"",
@@ -220,7 +239,7 @@
                 {
                  "height":0,
                  "id":6,
-                 "name":"agua1",
+                 "name":"agua",
                  "point":true,
                  "rotation":0,
                  "type":"",
@@ -232,38 +251,26 @@
                 {
                  "height":0,
                  "id":7,
-                 "name":"tierra2",
+                 "name":"tierra",
                  "point":true,
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":896,
-                 "y":426
+                 "x":896.867284490295,
+                 "y":367.024654659906
                 }, 
                 {
                  "height":0,
                  "id":8,
-                 "name":"tierra1",
+                 "name":"tierra",
                  "point":true,
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":0,
                  "x":103,
-                 "y":246
-                }, 
-                {
-                 "height":0,
-                 "id":10,
-                 "name":"oso",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":508,
-                 "y":496
+                 "y":189.626508130792
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -271,7 +278,7 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":8,
+ "nextlayerid":9,
  "nextobjectid":12,
  "orientation":"orthogonal",
  "renderorder":"right-down",

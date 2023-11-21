@@ -9,7 +9,6 @@ export default class Nivel1 extends Phaser.Scene {
     init() {
       this.nivel = 2;
 
-    
     }
   
     create() {
@@ -51,6 +50,163 @@ export default class Nivel1 extends Phaser.Scene {
       this.cursors = this.input.keyboard.createCursorKeys();
 
 
+      //grupo vacío de las cartas tierra
+      this.tierra = this.physics.add.group();
+      //tipo tierra
+      capaobjetos.objects.forEach((objData) => {
+        console.log(objData.name, objData.type, objData.x, objData.y);
+        const { x = 0, y = 0, name } = objData;
+        switch (name) {
+        case "tierra": {
+          //añadir en pantalla
+          const tierra = this.tierra.create(x, y, "tierra");
+          break;
+          }
+        }
+      });
+
+      // Pausa antes de cambiar las texturas
+      this.time.addEvent({
+        delay: 2000, // tiempo en milisegundos (en este caso, 2000 ms = 2 segundos)
+        callback: () => {
+      //Cambiar la textura de todos los elementos en el grupo
+      this.tierra.children.iterate(objeto => {
+       objeto.setTexture('cartareverso');
+       });
+      },
+
+        // esto significa que el evento se ejecutará solo una vez
+        loop: false  
+     });
+
+      //grupo vacío de las cartas aire
+      this.aire = this.physics.add.group();
+
+      capaobjetos.objects.forEach((objData) => {
+        console.log(objData.name, objData.type, objData.x, objData.y);
+        const { x = 0, y = 0, name } = objData;
+        switch (name) {
+        case "aire": {
+          const aire = this.aire.create(x, y, "aire");
+          break;
+          }
+        }
+      });
+
+      this.time.addEvent({
+        delay: 2000,
+        callback: () => {    
+      this.aire.children.iterate(objeto => {
+        objeto.setTexture('cartareverso');
+        });
+      },
+
+      loop: false  
+    });
+
+      //grupo vacío de las cartas agua
+      this.agua = this.physics.add.group();
+
+      capaobjetos.objects.forEach((objData) => {
+        console.log(objData.name, objData.type, objData.x, objData.y);
+        const { x = 0, y = 0, name } = objData;
+        switch (name) {
+        case "agua": {
+          const agua = this.agua.create(x, y, "agua");
+          break;
+          }
+        }
+      });
+
+      this.time.addEvent({
+        delay: 2000,
+        callback: () => {    
+      this.agua.children.iterate(objeto => {
+        objeto.setTexture('cartareverso');
+        });
+      },
+
+      loop: false  
+    });
+
+      // grupo vacío de las cartas fuego
+      this.fuego = this.physics.add.group();
+
+      capaobjetos.objects.forEach((objData) => {
+        console.log(objData.name, objData.type, objData.x, objData.y);
+        const { x = 0, y = 0, name } = objData;
+        switch (name) {
+        case "fuego": {
+          const fuego = this.fuego.create(x, y, "fuego");
+          break;
+          }
+        }
+      });
+
+      this.time.addEvent({
+        delay: 2000,
+        callback: () => {  
+      this.fuego.children.iterate(objeto => {
+        objeto.setTexture('cartareverso');
+      });
+    },
+
+    loop: false  
+  });
+
+      // añadir colisiones 
+      this.physics.add.collider(this.tierra, capaplataformas);
+      this.physics.add.collider(this.tierra, capatablero);
+      this.physics.add.collider(this.tierra, capatiles);
+      this.physics.add.collider(
+        this.oso,
+        this.tierra,
+      //this.recolectarCartas,
+        null,
+        this,
+        this.capapiso
+
+      );
+
+      this.physics.add.collider(this.aire, capaplataformas);
+      this.physics.add.collider(this.aire, capatablero);
+      this.physics.add.collider(this.aire, capatiles);
+      this.physics.add.collider(
+        this.oso,
+        this.aire,
+      //this.recolectarCartas,
+        null,
+        this,
+        this.capapiso
+
+      );
+
+       this.physics.add.collider(this.agua, capaplataformas);
+       this.physics.add.collider(this.agua, capatablero);
+       this.physics.add.collider(this.agua, capatiles);
+       this.physics.add.collider(
+         this.oso,
+         this.agua,
+       //this.recolectarCartas,
+         null,
+         this,
+         this.capapiso
+ 
+       );
+       
+       this.physics.add.collider(this.fuego, capaplataformas);
+       this.physics.add.collider(this.fuego, capatablero);
+       this.physics.add.collider(this.fuego, capatiles);
+       this.physics.add.collider(
+         this.oso,
+         this.fuego,
+       //this.recolectarCartas,
+         null,
+         this,
+         this.capapiso
+ 
+       );  
+
       const pausaButton = this.add.sprite(45, 55, "pausa1").setInteractive();
       // Agrega eventos de clic a los botones.
       pausaButton.on("pointerover", () => 
@@ -70,7 +226,6 @@ export default class Nivel1 extends Phaser.Scene {
                 this.scene.launch("Pausa")
                 
           });
-
         }
 
       update(){
@@ -98,3 +253,4 @@ export default class Nivel1 extends Phaser.Scene {
         }
       }
     }
+  

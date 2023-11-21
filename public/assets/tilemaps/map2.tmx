@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="31" height="19" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="12">
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="31" height="19" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="12">
  <editorsettings>
-  <export target="map2.json" format="json"/>
+  <export format="json"/>
  </editorsettings>
  <tileset firstgid="1" name="TilesetFondo" tilewidth="32" tileheight="32" tilecount="450" columns="25">
   <image source="../images/Tileset.png" width="800" height="600"/>
@@ -695,31 +695,31 @@
 </data>
  </layer>
  <objectgroup id="5" name="objetos">
-  <object id="1" name="aire2" x="245" y="324">
-   <point/>
-  </object>
-  <object id="2" name="aire1" x="384" y="431">
-   <point/>
-  </object>
-  <object id="3" name="fuego2" x="112" y="430">
-   <point/>
-  </object>
-  <object id="4" name="fuego1" x="618" y="235">
-   <point/>
-  </object>
-  <object id="5" name="agua2" x="764" y="332">
-   <point/>
-  </object>
-  <object id="6" name="agua1" x="901" y="229">
-   <point/>
-  </object>
-  <object id="7" name="tierra2" x="896" y="426">
-   <point/>
-  </object>
-  <object id="8" name="tierra1" x="103" y="246">
-   <point/>
-  </object>
   <object id="10" name="oso" x="508" y="496">
+   <point/>
+  </object>
+  <object id="1" name="aire" x="245" y="324">
+   <point/>
+  </object>
+  <object id="2" name="aire" x="384" y="431">
+   <point/>
+  </object>
+  <object id="3" name="fuego" x="112" y="430">
+   <point/>
+  </object>
+  <object id="4" name="fuego" x="618" y="235">
+   <point/>
+  </object>
+  <object id="5" name="agua" x="764" y="332">
+   <point/>
+  </object>
+  <object id="6" name="agua" x="901" y="229">
+   <point/>
+  </object>
+  <object id="7" name="tierra" x="896.867" y="367.025">
+   <point/>
+  </object>
+  <object id="8" name="tierra" x="103" y="189.627">
    <point/>
   </object>
  </objectgroup>
