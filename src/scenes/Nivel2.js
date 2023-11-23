@@ -1,4 +1,4 @@
-export default class Nivel1 extends Phaser.Scene {
+export default class Nivel2 extends Phaser.Scene {
     constructor() {
       // key of the scene
       // the key will be used to start the scene by other scenes

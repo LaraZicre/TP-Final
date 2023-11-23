@@ -39,7 +39,7 @@ export default class Menu extends Phaser.Scene {
     //soltar boton
     playpointer.on('pointerup', () => {
       playpointer.setTexture("play2");
-      this.scene.start("Nivel2");
+      this.scene.start("Nivel3");
     })
     playpointer.on('pointerover', () => {
       playpointer.setTexture("play2");
@@ -61,17 +61,17 @@ export default class Menu extends Phaser.Scene {
     //boton quieto
     const tutopointer= this.add.sprite(50, 560, "tuto1").setInteractive();
     tutopointer.on('pointerover', () => {
-      this.setTexture("tuto2");
+      tutopointer.setTexture("tuto2");
     });
 
     //soltar boton
     tutopointer.on('pointerup', () => {
       tutopointer.setTexture("tuto2");
-      this.pressTuto();
+      this.scene.start("Tutorial");
     }, this);
     //mouse sobre boton
     tutopointer.on('pointerout', () => {
-      this.setTexture("tuto1");
+      tutopointer.setTexture("tuto1");
     });
     //presionar boton
     tutopointer.on('pointerdown', () => {

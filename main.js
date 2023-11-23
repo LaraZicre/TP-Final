@@ -3,7 +3,8 @@ import Intro from "./src/scenes/Intro.js";
 import Menu from "./src/scenes/Menu.js";
 import Tutorial from "./src/scenes/Tutorial.js";
 //import Nivel1 from "./src/scenes/Nivel1.js";
-import Nivel2 from "./src/scenes/Nivel2.js";
+//import Nivel2 from "./src/scenes/Nivel2.js";
+import Nivel3 from "./src/scenes/Nivel3.js";
 import Pausa from "./src/scenes/Pausa.js";
 
 // Create a new Phaser config object
@@ -31,7 +32,7 @@ const config = {
     },
   },
 
-  scene: [Preload, Intro, Menu, Tutorial, Nivel2, Pausa],
+  scene: [Preload, Intro, Menu, Tutorial, Nivel3, Pausa],
 };
 
 window.game = new Phaser.Game(config);
