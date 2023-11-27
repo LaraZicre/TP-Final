@@ -58,6 +58,9 @@ export default class Preload extends Phaser.Scene {
       this.load.image("aire", "public/assets/images/Objets 1/carta-aire.png");
       this.load.image("cartareverso", "public/assets/images/Objets 1/carta-volteada.png");
 
+      //estrellas
+      this.load.image("estrella", "public/assets/images/Objets 2/Estrella.png");
+
       //premio nivel 1
       this.load.image("desayuno", "public/assets/images/Food/medialuna.png");
 

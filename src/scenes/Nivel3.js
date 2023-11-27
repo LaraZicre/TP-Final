@@ -19,13 +19,9 @@ export default class Nivel1 extends Phaser.Scene {
     const tablero = map.addTilesetImage("Tablerotile", "tablero");
 
     //fondo y tiles con posicion
-    const capafondo = map
-      .createLayer("fondo", tileset, 0, 0)
-      .setOrigin(0);
+    const capafondo = map.createLayer("fondo", tileset, 0, 0).setOrigin(0);
 
-    const capatiles = map
-      .createLayer("tiles", tileset, 0, 0)
-      .setOrigin(0);
+    const capatiles = map.createLayer("tiles", tileset, 0, 0).setOrigin(0);
 
     const capaplataformas = map
       .createLayer("plataformas", tileset, 0, 0)
@@ -56,6 +52,30 @@ export default class Nivel1 extends Phaser.Scene {
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
+    //ARREGLAR
+
+    //grupo vacío de las estrellas
+    this.estrella = this.physics.add.group();
+    //tipo estrella
+    capaobjetos.objects.forEach((objData) => {
+      console.log("pasa por aca", objData.name)
+      console.log(objData.name, objData.type, objData.x, objData.y);
+      const { x = 0, y = 0, name } = objData;
+      switch (name) {
+        case "estrella": {
+          const estrella = this.estrella.create(x, y, "estrella");
+          break;
+        }
+      }
+    });
+
+    //ARREGLAR
+
+    // añadir colisiones
+    this.physics.add.collider(this.estrella, capaplataformas);
+    this.physics.add.collider(this.estrella, capatablero);
+    this.physics.add.collider(this.estrella, capatiles);
+
     //camara
     this.cameras.main.startFollow(this.oso);
     //limites
@@ -77,10 +97,12 @@ export default class Nivel1 extends Phaser.Scene {
       pausaButton.setTexture("pausa2");
     });
 
-    pausaButton.on("pointerup", () => {
-      pausaButton.setTexture("pausa1");
-      this.scene.launch("Pausa");
-    });
+    pausaButton
+      .on("pointerup", () => {
+        pausaButton.setTexture("pausa1");
+        this.scene.launch("Pausa");
+      })
+      .setScrollFactor(0);
   }
 
   update() {
