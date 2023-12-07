@@ -9,6 +9,7 @@ export default class Nivel1 extends Phaser.Scene {
   }
 
   create() {
+    const escenaActual = "n1";
     //Load Map
     const map = this.make.tilemap({ key: "level1" });
     console.log(map);
@@ -19,12 +20,23 @@ export default class Nivel1 extends Phaser.Scene {
 
     //create layers variables using tiles
     const capafondo = map.createLayer("fondo", tileset, 0, 0);
+    capafondo.setDepth(0);
+
     const capatiles = map.createLayer("tiles", tileset, 0, 0);
     const capaplataformas = map.createLayer("plataformas", tileset, 0, 0);
     const capatablerofondo = map.createLayer("tablerofondo", tablero, 0, 0);
+
     const capatablero = map.createLayer("tablero", tablero, 0, 0);
+    capatablero.setDepth(2);
+
     const capapisocaja = map.createLayer("pisocaja", tablero, 0, 0);
     const capaobjetos = map.getObjectLayer("objetos");
+
+    const candado = this.add.sprite(838, 50, "candado1").setDepth(3);
+    // Configurar un evento personalizado llamado 'abrirCandado'
+    this.events.on("abrirCandado", function () {
+      candado.setTexture("candado2");
+    });
 
     //Load object for player from tiles
     let spawntPoint = map.findObject("objetos", (obj) => obj.name === "oso");
@@ -35,6 +47,8 @@ export default class Nivel1 extends Phaser.Scene {
     //Player physics properties. Give the little guy a slight bounce.
     this.oso.setBounce(0.1);
     this.oso.setCollideWorldBounds(true);
+    // Configurar el tamaño del cuadro de colisión del jugador
+    this.oso.body.setSize(20, 60);
 
     spawntPoint = map.findObject("objetos", (obj) => obj.name === "medialuna");
     console.log(spawntPoint);
@@ -78,11 +92,42 @@ export default class Nivel1 extends Phaser.Scene {
     this.crearDados(capaobjetos, this.dados);
 
     //medialuna fisicas
-    this.medialuna;
+    this.medialuna.setDepth(1);
+    this.medialuna.setBounce(0.8);
     // colision
     this.physics.add.collider(this.medialuna, capatablero);
     this.physics.add.collider(this.medialuna, capatiles);
     this.physics.add.collider(this.medialuna, capapisocaja);
+    this.physics.add.collider(
+      this.oso,
+      this.medialuna,
+      this.recolectarPremio,
+      null,
+      this
+    );
+
+    //boton pausa
+    const pausaButton = this.add.sprite(45, 55, "pausa1").setInteractive();
+    // Agrega eventos de clic a los botones.
+    pausaButton.on("pointerover", () => {
+      pausaButton.setTexture("pausa2");
+    });
+
+    pausaButton.on("pointerout", () => {
+      pausaButton.setTexture("pausa1");
+    });
+
+    pausaButton.on("pointerdown", () => {
+      pausaButton.setTexture("pausa2");
+    });
+
+    pausaButton.on("pointerup", () => {
+      pausaButton.setTexture("pausa1");
+
+      this.scene.pause("n1");
+      // Lanza la escena de pausa y pasa la clave de la escena actual
+      this.scene.launch("Pausa", { escenaActual: escenaActual });
+    });
   }
 
   crearDados(capaobjetos, dados) {
@@ -156,12 +201,6 @@ export default class Nivel1 extends Phaser.Scene {
     });
   }
 
-  tirarMedialuna() {}
-
-  reintentar() {
-    this.scene.start("NivelPerdido");
-  }
-
   recolectarDados(oso, dado, capapisocaja) {
     const ordenDados = [
       "d1",
@@ -179,13 +218,21 @@ export default class Nivel1 extends Phaser.Scene {
     this.dadosRecolectados.push(dado.texture.key);
     dado.disableBody(true, true);
 
+    // No verifiques después de cada recolección, espera hasta recolectar todos los dados
     if (this.dadosRecolectados.length === 10) {
       var sonIguales =
         JSON.stringify(ordenDados) === JSON.stringify(this.dadosRecolectados);
-    }
 
-    if (sonIguales) {
-      capapisocaja.setCollisionByProperty({ colision: true }, false);
+      if (sonIguales) {
+        // Emitir el evento 'abrirCandado' cuando se cumple la condición
+        this.events.emit("abrirCandado");
+
+        // Si son iguales, realiza las acciones correspondientes
+        capapisocaja.setCollisionByProperty({ colision: true }, false);
+      } else {
+        // Si no son iguales, realiza las acciones correspondientes
+        this.reintentarNivel();
+      }
     }
 
     switch (dado.texture.key) {
@@ -241,18 +288,28 @@ export default class Nivel1 extends Phaser.Scene {
     }
   }
 
-  recolectarPremio(sonIguales, oso) {}
+  reintentarNivel(sonIguales, oso) {
+    //reproducir sonido
+    //congelar escena 1 segundo mas o menos
+    this.scene.launch("NivelPerdido");
+  }
+
+  recolectarPremio(sonIguales, oso) {
+    //reproducir sonido
+    this.medialuna.destroy();
+    this.scene.launch("NivelGanado");
+  }
 
   update() {
     //ANIMS DEL OSO
     //move left
     if (this.cursors.left.isDown) {
-      this.oso.setVelocityX(-160);
+      this.oso.setVelocityX(-200);
       this.oso.anims.play("left", true);
     }
     //move right
     else if (this.cursors.right.isDown) {
-      this.oso.setVelocityX(160);
+      this.oso.setVelocityX(200);
       this.oso.anims.play("right", true);
     }
     //stop
@@ -263,7 +320,7 @@ export default class Nivel1 extends Phaser.Scene {
     //jump
     if (this.cursors.up.isDown && this.oso.body.blocked.down) {
       this.oso.anims.play("turn");
-      this.oso.setVelocityY(-200);
+      this.oso.setVelocityY(-250);
     }
   }
 }

@@ -3,20 +3,8 @@ export default class Menu extends Phaser.Scene {
     super("Menu");
   }
 
-  preload() {
-    //fondo menu
-    this.load.image("menuFondo", "public/assets/images/Menu/fondomenu.png");
-    //botonplay
-    this.load.image("play1", "public/assets/images/Menu/botonplay1.png");
-    this.load.image("play2", "public/assets/images/Menu/botonplay2.png");
-    this.load.image("play3", "public/assets/images/Menu/botonplay3.png");
-    //botontutorial
-    this.load.image("tuto1", "public/assets/images/Menu/botontutorial1.png");
-    this.load.image("tuto2", "public/assets/images/Menu/botontutorial2.png");
-    this.load.image("tuto3", "public/assets/images/Menu/botontutorial3.png");
+  init() {
   }
-
-  init() {}
 
   create() {
     this.add.image(496, 300, "menuFondo").setScale(1.1);

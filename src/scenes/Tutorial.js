@@ -5,12 +5,6 @@ export default class Tutorial extends Phaser.Scene {
       super("Tutorial");
       
     }
- 
-    preload(){
-      //tecla atras
-      this.load.image("atras1", "public/assets/images/Buttons/botonatras1.png");
-      this.load.image("atras2", "public/assets/images/Buttons/botonatras2.png");
-    }
 
     init(){
 

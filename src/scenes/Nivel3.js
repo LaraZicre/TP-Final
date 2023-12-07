@@ -7,9 +7,13 @@ export default class Nivel1 extends Phaser.Scene {
 
   init() {
     this.nivel = 3;
+    this.contadorEstrellas = 0;
+    this.temporizador = 90;
+    this.objetivoEstrellas = 20; // Cantidad necesaria para ganar
   }
 
   create() {
+    const escenaActual = "Nivel3";
     //Load Map
     const map = this.make.tilemap({ key: "level3" });
     console.log(map);
@@ -31,6 +35,7 @@ export default class Nivel1 extends Phaser.Scene {
     const capatablero = map.createLayer("tablero", tablero, 0, 0);
     const capaobjetos = map.getObjectLayer("objetos");
 
+
     //Load object for player from tiles
     let spawntPoint = map.findObject("objetos", (obj) => obj.name === "oso");
     console.log(spawntPoint);
@@ -39,8 +44,10 @@ export default class Nivel1 extends Phaser.Scene {
     this.oso = this.physics.add.sprite(spawntPoint.x, spawntPoint.y, "oso");
 
     //Player physics properties. Give the little guy a slight bounce.
-    this.oso.setBounce(0.1);
+    this.oso.setBounce(0.2);
     this.oso.setCollideWorldBounds(true);
+    // Configurar el tamaño del cuadro de colisión del jugador
+    this.oso.body.setSize(20, 60);
 
     //add colision for tile and platforms with the player
     capatiles.setCollisionByProperty({ colision: true });
@@ -52,13 +59,11 @@ export default class Nivel1 extends Phaser.Scene {
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
-    //ARREGLAR
-
     //grupo vacío de las estrellas
     this.estrella = this.physics.add.group();
+
     //tipo estrella
     capaobjetos.objects.forEach((objData) => {
-      console.log("pasa por aca", objData.name)
       console.log(objData.name, objData.type, objData.x, objData.y);
       const { x = 0, y = 0, name } = objData;
       switch (name) {
@@ -69,12 +74,22 @@ export default class Nivel1 extends Phaser.Scene {
       }
     });
 
-    //ARREGLAR
-
     // añadir colisiones
     this.physics.add.collider(this.estrella, capaplataformas);
     this.physics.add.collider(this.estrella, capatablero);
     this.physics.add.collider(this.estrella, capatiles);
+    this.physics.add.collider(
+      this.oso,
+      this.estrella,
+      this.recolectarEstrellas,
+      null,
+      this
+    );
+
+    // Configuración del grupo de postres
+    this.grupoDePostres = this.physics.add.group();
+    // Configura la colisión con el suelo o cualquier otra lógica necesaria
+    this.physics.add.collider(this.grupoDePostres, capatiles);
 
     //camara
     this.cameras.main.startFollow(this.oso);
@@ -82,6 +97,31 @@ export default class Nivel1 extends Phaser.Scene {
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     //para que la camara no se vaya fuera del mapa
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+
+    this.textocontador = this.add.text(16, 16, "Puntuación: 0", {
+      fontFamily: "Pixellari",
+      fontSize: "32px",
+      fill: "#fff",
+    });
+    this.textocontador.setScrollFactor(0);
+
+    //temporizador
+    this.time.addEvent({
+      delay: 1000,
+      callback: this.temporizadorDecreciendo,
+      callbackScope: this,
+      loop: true,
+    });
+
+    //texto que muestra el temporizador
+    this.temporizadorTexto = this.add
+      .text(700, 16, this.temporizador, {
+        fontFamily: "Pixellari",
+        fontSize: "32px",
+        fill: "#fff",
+      })
+      .setScrollFactor(0);
+
 
     const pausaButton = this.add.sprite(45, 55, "pausa1").setInteractive();
     // Agrega eventos de clic a los botones.
@@ -100,20 +140,79 @@ export default class Nivel1 extends Phaser.Scene {
     pausaButton
       .on("pointerup", () => {
         pausaButton.setTexture("pausa1");
-        this.scene.launch("Pausa");
+        this.scene.launch("Pausa", { escenaActual: escenaActual });
       })
       .setScrollFactor(0);
   }
 
+  recolectarEstrellas(oso, estrella) {
+    // Incrementa el contador
+    this.contadorEstrellas++;
+
+    // Actualiza el texto del marcador
+    this.textocontador.setText(" Puntuación: " + this.contadorEstrellas);
+
+    // Elimina el postre recolectable
+    estrella.disableBody(true, true);
+  }
+
+  temporizadorDecreciendo(oso, estrella, lluviaDeComida) {
+    this.temporizador = this.temporizador - 1;
+    this.temporizadorTexto.setText(+this.temporizador);
+
+    // Si se alcanza el objetivo de recolección, el jugador gana
+    if (this.contadorEstrellas >= this.objetivoEstrellas) {
+    // Detén el temporizador
+    this.lluviaDeComida(50, 0);// Ajusta los parámetros según sea necesario
+    console.log("ganar");
+
+    //this.scene.launch("JuegoSuperado");
+    }
+
+    // Si el temporizador llega a cero, el jugador pierde
+    if (this.temporizador <= 0) {
+      this.scene.pause("Nivel3");
+      this.scene.launch("NivelPerdido");
+    }
+  }
+
+  lluviaDeComida(cantidad, velocidad) {
+
+        // Ejemplo de conjunto de objetos
+          const conjuntoDePostres = ["postre1", "postre2", "postre3"];
+
+      for (var i = 0; i < cantidad; i++) {
+        // Esperar el intervalo de tiempo antes de crear el siguiente objeto
+        this.time.delayedCall(i * 50, function () {
+          // Elige un objeto aleatorio del conjunto
+          const postreAleatorio = Phaser.Math.RND.pick(conjuntoDePostres);
+          // Crea una instancia del objeto y configura su posición inicial
+          const posicionAleatoria = Phaser.Math.RND.between(5000, 5900);
+  
+          // Añade el postre al grupo de postres
+          const postre = this.grupoDePostres.create(posicionAleatoria, 0, postreAleatorio).setBounce(0.8);
+  
+          // Configura la velocidad de caída
+          postre.setVelocity(0, velocidad);
+  
+
+
+        }, [], this);
+      }
+    
+  }
+
+  
+
   update() {
     //move left
     if (this.cursors.left.isDown) {
-      this.oso.setVelocityX(-160);
+      this.oso.setVelocityX(-360);
       this.oso.anims.play("left", true);
     }
     //move right
     else if (this.cursors.right.isDown) {
-      this.oso.setVelocityX(160);
+      this.oso.setVelocityX(360);
       this.oso.anims.play("right", true);
     }
     //stop
