@@ -1,7 +1,5 @@
 export default class Nivel1 extends Phaser.Scene {
   constructor() {
-    // key of the scene
-    // the key will be used to start the scene by other scenes
     super("Nivel3");
   }
 
@@ -9,7 +7,8 @@ export default class Nivel1 extends Phaser.Scene {
     this.nivel = 3;
     this.contadorEstrellas = 0;
     this.temporizador = 90;
-    this.objetivoEstrellas = 20; // Cantidad necesaria para ganar
+    this.temporizadorActivo = true;
+    this.objetivoEstrellas = 20;
   }
 
   create() {
@@ -34,7 +33,6 @@ export default class Nivel1 extends Phaser.Scene {
     const capatablerofondo = map.createLayer("tablerofondo", tablero, 0, 0);
     const capatablero = map.createLayer("tablero", tablero, 0, 0);
     const capaobjetos = map.getObjectLayer("objetos");
-
 
     //Load object for player from tiles
     let spawntPoint = map.findObject("objetos", (obj) => obj.name === "oso");
@@ -98,12 +96,15 @@ export default class Nivel1 extends Phaser.Scene {
     //para que la camara no se vaya fuera del mapa
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
-    this.textocontador = this.add.text(16, 16, "Puntuación: 0", {
+    //sprite
+    this.estrellaImagen = this.add.sprite(800, 40, "estrella")
+    .setScrollFactor(0);
+    this.contadorTexto = this.add.text(860, 40, "0", {
       fontFamily: "Pixellari",
       fontSize: "32px",
       fill: "#fff",
     });
-    this.textocontador.setScrollFactor(0);
+    this.contadorTexto.setScrollFactor(0);
 
     //temporizador
     this.time.addEvent({
@@ -113,33 +114,33 @@ export default class Nivel1 extends Phaser.Scene {
       loop: true,
     });
 
+    //sprite temporizador
+    this.temporizadorImagen = this.add.sprite(900, 40, "reloj")
+    .setScrollFactor(0);
     //texto que muestra el temporizador
-    this.temporizadorTexto = this.add
-      .text(700, 16, this.temporizador, {
+    this.temporizadorTexto = this.add.text(940, 40, this.temporizador, {
         fontFamily: "Pixellari",
         fontSize: "32px",
         fill: "#fff",
       })
       .setScrollFactor(0);
 
-
-    const pausaButton = this.add.sprite(45, 55, "pausa1").setInteractive();
+    this.pausaButton = this.add.sprite(45, 55, "pausa1").setInteractive();
     // Agrega eventos de clic a los botones.
-    pausaButton.on("pointerover", () => {
-      pausaButton.setTexture("pausa2");
+    this.pausaButton.on("pointerover", () => {
+      this.pausaButton.setTexture("pausa2");
     });
 
-    pausaButton.on("pointerout", () => {
-      pausaButton.setTexture("pausa1");
+    this.pausaButton.on("pointerout", () => {
+      this.pausaButton.setTexture("pausa1");
     });
 
-    pausaButton.on("pointerdown", () => {
-      pausaButton.setTexture("pausa2");
+    this.pausaButton.on("pointerdown", () => {
+      this.pausaButton.setTexture("pausa2");
     });
 
-    pausaButton
-      .on("pointerup", () => {
-        pausaButton.setTexture("pausa1");
+    this.pausaButton.on("pointerup", () => {
+        this.pausaButton.setTexture("pausa1");
         this.scene.launch("Pausa", { escenaActual: escenaActual });
       })
       .setScrollFactor(0);
@@ -150,25 +151,42 @@ export default class Nivel1 extends Phaser.Scene {
     this.contadorEstrellas++;
 
     // Actualiza el texto del marcador
-    this.textocontador.setText(" Puntuación: " + this.contadorEstrellas);
+    this.contadorTexto.setText(this.contadorEstrellas);
 
     // Elimina el postre recolectable
     estrella.disableBody(true, true);
   }
 
   temporizadorDecreciendo(oso, estrella, lluviaDeComida) {
-    this.temporizador = this.temporizador - 1;
-    this.temporizadorTexto.setText(+this.temporizador);
-
+    // Si el temporizador está activo y no se ha ganado el juego
+    if (
+      this.temporizadorActivo &&
+      this.temporizador > 0 &&
+      this.contadorEstrellas < this.objetivoEstrellas
+    ) {
+      this.temporizador = this.temporizador - 1;
+      this.temporizadorTexto.setText(+this.temporizador);
+    }
     // Si se alcanza el objetivo de recolección, el jugador gana
     if (this.contadorEstrellas >= this.objetivoEstrellas) {
-    // Detén el temporizador
-    this.lluviaDeComida(50, 0);// Ajusta los parámetros según sea necesario
-    console.log("ganar");
-
-    //this.scene.launch("JuegoSuperado");
+      // Detén el temporizador
+      this.temporizadorActivo = false;
+      //detener al oso
+      this.detenerOso();
+      //lluvia de comida
+      this.lluviaDeComida(50, 0);
+      // Desaparecer la interfaz
+      this.ocultarInterfaz();
+      // Esperar unos segundos y lanzar la escena de juego superado
+      this.time.delayedCall(
+        6000,
+        function () {
+          this.scene.launch("JuegoSuperado");
+        },
+        [],
+        this
+      );
     }
-
     // Si el temporizador llega a cero, el jugador pierde
     if (this.temporizador <= 0) {
       this.scene.pause("Nivel3");
@@ -176,55 +194,75 @@ export default class Nivel1 extends Phaser.Scene {
     }
   }
 
+  detenerOso() {
+    if (this.oso) {
+      this.oso.setVelocity(0);
+      this.oso.anims.play("turn");
+    }
+  }
+
   lluviaDeComida(cantidad, velocidad) {
+    // Ejemplo de conjunto de objetos
+    const conjuntoDePostres = ["postre1", "postre2", "postre3"];
 
-        // Ejemplo de conjunto de objetos
-          const conjuntoDePostres = ["postre1", "postre2", "postre3"];
-
-      for (var i = 0; i < cantidad; i++) {
-        // Esperar el intervalo de tiempo antes de crear el siguiente objeto
-        this.time.delayedCall(i * 50, function () {
+    for (var i = 0; i < cantidad; i++) {
+      // Esperar el intervalo de tiempo antes de crear el siguiente objeto
+      this.time.delayedCall(
+        i * 50,
+        function () {
           // Elige un objeto aleatorio del conjunto
           const postreAleatorio = Phaser.Math.RND.pick(conjuntoDePostres);
           // Crea una instancia del objeto y configura su posición inicial
           const posicionAleatoria = Phaser.Math.RND.between(5000, 5900);
-  
+
           // Añade el postre al grupo de postres
-          const postre = this.grupoDePostres.create(posicionAleatoria, 0, postreAleatorio).setBounce(0.8);
-  
+          const postre = this.grupoDePostres
+            .create(posicionAleatoria, 0, postreAleatorio)
+            .setBounce(0.8);
+
           // Configura la velocidad de caída
           postre.setVelocity(0, velocidad);
-  
-
-
-        }, [], this);
-      }
-    
+        },
+        [],
+        this
+      );
+    }
   }
 
-  
+  ocultarInterfaz(temporizadorTexto, contadorTexto, pausaButton) {
+    // Ocultar el temporizador y el contador de objetos
+    this.temporizadorTexto.setVisible(false);
+    this.contadorTexto.setVisible(false);
+    // Si tienes un botón de pausa, ocúltalo también
+    if (this.pausaButton) {
+      this.pausaButton.setVisible(false);
+    }
+  }
 
   update() {
-    //move left
-    if (this.cursors.left.isDown) {
-      this.oso.setVelocityX(-360);
-      this.oso.anims.play("left", true);
-    }
-    //move right
-    else if (this.cursors.right.isDown) {
-      this.oso.setVelocityX(360);
-      this.oso.anims.play("right", true);
-    }
-    //stop
-    else {
-      this.oso.setVelocityX(0);
-      this.oso.anims.play("turn");
-    }
+    // Verificar si el temporizador está activo
+    if (this.temporizadorActivo) {
+      //move left
+      if (this.cursors.left.isDown) {
+        this.oso.setVelocityX(-360);
+        this.oso.anims.play("left", true);
+      }
+      //move right
+      else if (this.cursors.right.isDown) {
+        this.oso.setVelocityX(360);
+        this.oso.anims.play("right", true);
+      }
+      //stop
+      else {
+        this.oso.setVelocityX(0);
+        this.oso.anims.play("turn");
+      }
 
-    //jump
-    if (this.cursors.up.isDown && this.oso.body.blocked.down) {
-      this.oso.anims.play("turn");
-      this.oso.setVelocityY(-330);
+      //jump
+      if (this.cursors.up.isDown && this.oso.body.blocked.down) {
+        this.oso.anims.play("turn");
+        this.oso.setVelocityY(-330);
+      }
     }
   }
 }

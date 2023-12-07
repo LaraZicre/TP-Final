@@ -16,6 +16,7 @@ export default class Preload extends Phaser.Scene {
       this.load.image("tablero", "public/assets/images/Interfaz/Tablerotile.png");
       this.load.image("candado1", "public/assets/images/Interfaz/candadocerrado.png");
       this.load.image("candado2", "public/assets/images/Interfaz/candadoabierto.png");
+      this.load.image("reloj", "public/assets/images/Interfaz/Reloj.png");
 
 
       //fondo menu

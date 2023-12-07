@@ -10,7 +10,7 @@ export default class JuegoSuperado extends Phaser.Scene {
   
     create() {
       // Cargar la imagen transparente como fondo.
-      this.add.image(496, 300, "popopUpGanarJuego");
+      this.add.image(496, 300, "popUpGanarJuego");
 
       this.textoSuperarJuego = this.add.text(345, 250, "¡Felicitaciones!", {
         fontFamily: "Pixellari",
