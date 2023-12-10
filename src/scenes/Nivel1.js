@@ -6,10 +6,12 @@ export default class Nivel1 extends Phaser.Scene {
   init() {
     this.nivel = 1;
     this.dadosRecolectados = [];
+    this.nivelSuperado = false;
+    this.reintentarNivel = false;
+    this.escenaActual = "nivel1";
   }
 
   create() {
-    const escenaActual = "n1";
     //Load Map
     const map = this.make.tilemap({ key: "level1" });
     console.log(map);
@@ -118,15 +120,14 @@ export default class Nivel1 extends Phaser.Scene {
     });
 
     pausaButton.on("pointerdown", () => {
-      pausaButton.setTexture("pausa2");
+     pausaButton.setTexture("pausa2");
     });
 
     pausaButton.on("pointerup", () => {
       pausaButton.setTexture("pausa1");
-
-      this.scene.pause("n1");
+      this.scene.pause("Nivel1");
       // Lanza la escena de pausa y pasa la clave de la escena actual
-      this.scene.launch("Pausa", { escenaActual: escenaActual });
+      this.scene.launch("Pausa", { escenaActual: this.escenaActual });
     });
   }
 
@@ -231,7 +232,7 @@ export default class Nivel1 extends Phaser.Scene {
         capapisocaja.setCollisionByProperty({ colision: true }, false);
       } else {
         // Si no son iguales, realiza las acciones correspondientes
-        this.reintentarNivel();
+        this.reintentarNivel = true;
       }
     }
 
@@ -288,16 +289,11 @@ export default class Nivel1 extends Phaser.Scene {
     }
   }
 
-  reintentarNivel(sonIguales, oso) {
-    //reproducir sonido
-    //congelar escena 1 segundo mas o menos
-    this.scene.launch("NivelPerdido");
-  }
-
   recolectarPremio(sonIguales, oso) {
     //reproducir sonido
     this.medialuna.destroy();
-    this.scene.launch("NivelGanado");
+    this.nivelSuperado = true
+
   }
 
   update() {
@@ -322,5 +318,19 @@ export default class Nivel1 extends Phaser.Scene {
       this.oso.anims.play("turn");
       this.oso.setVelocityY(-250);
     }
-  }
+
+    if (this.nivelSuperado) {
+      this.scene.pause("nivel1");
+      this.scene.launch("NivelGanado", {
+        escenaActual: this.escenaActual, //traspaso de data
+      });
+    }
+
+    if (this.reintentarNivel) {
+      this.scene.pause("nivel1");
+      this.scene.launch("NivelPerdido", {
+        escenaActual: this.escenaActual, //traspaso de data
+      });
+    }
+}
 }

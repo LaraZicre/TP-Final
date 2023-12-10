@@ -5,9 +5,8 @@ export default class Pausa extends Phaser.Scene {
     super("Pausa");
   }
 
-  init() {
-    this.escenaActual = this.scene.key;
-
+  init(data) {
+    this.escenaActual = data.escenaActual;
   }
 
   create() {
@@ -22,26 +21,33 @@ export default class Pausa extends Phaser.Scene {
     });
 
     const volverButton = this.add.sprite(400, 350, "atras1").setInteractive();
-    // Agrega eventos de clic a los botones.
+
+
     volverButton.on("pointerover", () => {
       volverButton.setTexture("atras2");
-    });
-
+    })
     volverButton.on("pointerout", () => {
       volverButton.setTexture("atras1");
-    });
-
+    })
     volverButton.on("pointerdown", () => {
       volverButton.setTexture("atras2");
-    });
+      });
 
-    volverButton.on("pointerup", () => {
-      volverButton.setTexture("atras1"), function () {
-        this.scene.resume("escenaActual");
-        this.scene.stop();
-    }, this);
 
-    });
+    // Agrega eventos de clic a los botones.
+    volverButton.on("pointerup", () =>  {
+        console.log(this.escenaActual)
+        this.scene.stop()
+        if (this.escenaActual === "nivel1") {
+          console.log("entro al if")
+          this.scene.stop("Pausa")
+          this.scene.resume("Nivel1");
+        } else if (this.escenaActual === "nivel2") {
+          this.scene.resume("Nivel2");
+        } else if (this.escenaActual === "nivel3"){ 
+          this.scene.resume("Nivel3");
+        };
+    })
 
     const menuButton = this.add.sprite(570, 350, "menu1").setInteractive();
     // Agrega eventos de clic a los botones.
@@ -59,9 +65,14 @@ export default class Pausa extends Phaser.Scene {
 
     menuButton.on("pointerup", () => {
       menuButton.setTexture("menu1");
-
       this.scene.stop("Pausa");
-      //this.scene.stop("Nivel3");
+      if (this.escenaActual === "nivel1") {
+        this.scene.stop("Nivel1");
+      } else if (this.escenaActual === "nivel2") {
+        this.scene.stop("Nivel2");
+      } else if (this.escenaActual === "nivel3"){ 
+        this.scene.stop("Nivel3");
+      }
       this.scene.start("Menu");
     });
   }

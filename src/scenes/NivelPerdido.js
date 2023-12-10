@@ -5,8 +5,8 @@ export default class NivelPerdido extends Phaser.Scene {
     super("NivelPerdido");
   }
 
-  init() {
-
+  init(data) {
+    this.escenaActual = data.escenaActual;
   }
 
 
@@ -51,20 +51,15 @@ export default class NivelPerdido extends Phaser.Scene {
     });
 
     reintentarButton.on("pointerup", () => {
-      reintentarButton.setTexture("reintentar1");
-      this.scene.stop("NivelPerdido");
-
       if (this.escenaActual === "nivel1") {
-        this.scene.start("nivel1");
-      } 
-      else if (this.escenaActual === "nivel2") {
-        this.scene.start("nivel2");
-      } 
-      else if (this.escenaActual === "nivel3"){ 
-        this.scene.start("nivel3");
+        this.scene.start("Nivel1");
+      } else if (this.escenaActual === "nivel2") {
+        this.scene.start("Nivel2");
+      } else if (this.escenaActual === "nivel3"){ 
+        this.scene.start("Nivel3");
       }
-    });
-
+    })
+    
     const menuButton = this.add.sprite(570, 370, "menu1").setInteractive();
     // Agrega eventos de clic a los botones.
     menuButton.on("pointerover", () => {
@@ -81,8 +76,14 @@ export default class NivelPerdido extends Phaser.Scene {
 
     menuButton.on("pointerup", () => {
       menuButton.setTexture("menu1");
-
       this.scene.stop("NivelPerdido");
+      if (this.escenaActual === "nivel1") {
+        this.scene.stop("Nivel1");
+      } else if (this.escenaActual === "nivel2") {
+        this.scene.stop("Nivel2");
+      } else if (this.escenaActual === "nivel3"){ 
+        this.scene.stop("Nivel3");
+      }
       this.scene.start("Menu");
     });
   }

@@ -35,10 +35,7 @@ const config = {
     },
     
   },
-
-
-
-  scene: [Preload, Intro, Menu, Tutorial, Nivel3, Pausa, NivelGanado, NivelPerdido, JuegoSuperado],
+  scene: [Preload, Intro, Menu, Tutorial, Nivel1, Nivel2, Nivel3, Pausa, NivelGanado, NivelPerdido, JuegoSuperado],
 };
 
 window.game = new Phaser.Game(config);

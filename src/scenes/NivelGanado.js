@@ -5,7 +5,8 @@ export default class NivelGanado extends Phaser.Scene {
     super("NivelGanado");
   }
 
-  init() {
+  init(data) {
+    this.escenaActual = data.escenaActual;
   }
 
   create() {
@@ -22,30 +23,32 @@ export default class NivelGanado extends Phaser.Scene {
       .sprite(400, 350, "seguir1")
       .setInteractive();
     // Agrega eventos de clic a los botones.
-    continuarButton.on("pointerover", () => {
-      continuarButton.setTexture("seguir2");
-    });
-
-    continuarButton.on("pointerout", () => {
-      continuarButton.setTexture("seguir1");
-    });
-
-    continuarButton.on("pointerdown", () => {
-      continuarButton.setTexture("seguir2");
-    });
-
-    continuarButton.on("pointerup", () => {
+    continuarButton
+    .on("pointerup", () => {
+      console.log("aprieta boton")
+      console.log(this.escenaActual)
       continuarButton.setTexture("seguir1");
       if (this.escenaActual === "nivel1") {
-        this.scene.stop("nivel1");
-        this.scene.stop("nivelGanado");
-        this.scene.start("nivel2");
+        console.log("entra al if")
+        this.scene.stop("Nivel1");
+        this.scene.stop("NivelGanado");
+        this.scene.start("Nivel2");
+
       }
       else if (this.escenaActual === "nivel2") {
-        this.scene.stop("nivel2");
-        this.scene.stop("nivelGanado");
-        this.scene.start("nivel3");
+        this.scene.stop("Nivel2");
+        this.scene.stop("NivelGanado");
+        this.scene.start("Nivel3");
       }
+    })
+    .on("pointerover", () => {
+      continuarButton.setTexture("seguir2");
+    })
+    .on("pointerout", () => {
+      continuarButton.setTexture("seguir1");
+    })
+    .on("pointerdown", () => {
+      continuarButton.setTexture("seguir2");
     });
 
     const menuButton = this.add.sprite(570, 350, "menu1").setInteractive();
@@ -65,7 +68,13 @@ export default class NivelGanado extends Phaser.Scene {
     menuButton.on("pointerup", () => {
       menuButton.setTexture("menu1");
       this.scene.stop("NivelGanado");
-      this.scene.stop(this.escenaActual);
+      if (this.escenaActual === "nivel1") {
+        this.scene.stop("Nivel1");
+      } else if (this.escenaActual === "nivel2") {
+        this.scene.stop("Nivel2");
+      } else if (this.escenaActual === "nivel3"){ 
+        this.scene.stop("Nivel3");
+      }
       this.scene.start("Menu");
     });
   }

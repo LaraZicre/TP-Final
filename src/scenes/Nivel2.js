@@ -6,11 +6,10 @@ export default class Nivel2 extends Phaser.Scene {
   }
 
   init() {
-    this.nivel = 2;
   }
 
   create() {
-    const escenaActual = "Nivel2";
+    const escenaActual = "nivel2";
     //Load Map
     const map = this.make.tilemap({ key: "level2" });
     console.log(map);

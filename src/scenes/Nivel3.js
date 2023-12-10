@@ -125,28 +125,26 @@ export default class Nivel1 extends Phaser.Scene {
       })
       .setScrollFactor(0);
 
-    this.pausaButton = this.add.sprite(45, 55, "pausa1").setInteractive();
+
+
+    const pausaButton = this.add.sprite(45, 55, "pausa1").setInteractive();
     // Agrega eventos de clic a los botones.
-    this.pausaButton.on("pointerover", () => {
-      this.pausaButton.setTexture("pausa2");
+    pausaButton.on("pointerover", () => {
+      pausaButton.setTexture("pausa2");
     });
 
-    this.pausaButton.on("pointerout", () => {
-      this.pausaButton.setTexture("pausa1");
+    pausaButton.on("pointerout", () => {
+      pausaButton.setTexture("pausa1");
     });
 
-    this.pausaButton.on("pointerdown", () => {
-      this.pausaButton.setTexture("pausa2");
+    pausaButton.on("pointerdown", () => {
+      pausaButton.setTexture("pausa2");
     });
 
-    this.pausaButton.on("pointerup", () => {
-        this.pausaButton.setTexture("pausa1");
-        this.scene.pause("Nivel3");
-        this.scene.launch("Pausa");
-      })
-      .setScrollFactor(0);
-
-
+    pausaButton.on("pointerup", () => {
+      pausaButton.setTexture("pausa1");
+      this.scene.launch("Pausa", { escenaActual: escenaActual });
+    }).setScrollFactor(0);
   }
 
   recolectarEstrellas(oso, estrella) {

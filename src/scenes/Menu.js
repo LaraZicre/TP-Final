@@ -32,7 +32,7 @@ export default class Menu extends Phaser.Scene {
     //soltar boton
     playpointer.on("pointerup", () => {
       playpointer.setTexture("play2");
-      this.scene.start("Nivel3");
+      this.scene.start("Nivel1");
     });
     playpointer.on("pointerover", () => {
       playpointer.setTexture("play2");
