@@ -121,7 +121,11 @@ export default class Preload extends Phaser.Scene {
         repeat: -1,
       });  
 
+
+
     }
+
+
   
 
     update() {

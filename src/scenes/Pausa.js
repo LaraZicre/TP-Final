@@ -7,6 +7,7 @@ export default class Pausa extends Phaser.Scene {
 
   init() {
     this.escenaActual = this.scene.key;
+
   }
 
   create() {
@@ -35,10 +36,11 @@ export default class Pausa extends Phaser.Scene {
     });
 
     volverButton.on("pointerup", () => {
-      volverButton.setTexture("atras1");
+      volverButton.setTexture("atras1"), function () {
+        this.scene.resume("escenaActual");
+        this.scene.stop();
+    }, this);
 
-      this.scene.stop("Pausa");
-      this.scene.resume(this.scene.escenaActual);
     });
 
     const menuButton = this.add.sprite(570, 350, "menu1").setInteractive();
@@ -59,7 +61,7 @@ export default class Pausa extends Phaser.Scene {
       menuButton.setTexture("menu1");
 
       this.scene.stop("Pausa");
-      this.scene.stop("Nivel3");
+      //this.scene.stop("Nivel3");
       this.scene.start("Menu");
     });
   }

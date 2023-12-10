@@ -14,6 +14,16 @@ export default class Menu extends Phaser.Scene {
 
     //añadir boton play
     this.playButton();
+
+    //pantalla completa
+    this.input.keyboard.on('keydown-F', function (event) {
+      if (this.scale.isFullscreen) {
+          this.scale.stopFullscreen();
+      } else {
+          this.scale.startFullscreen();
+      }
+  }, this);
+  
   }
 
   playButton() {

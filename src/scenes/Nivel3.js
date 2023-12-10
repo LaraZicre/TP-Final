@@ -141,9 +141,12 @@ export default class Nivel1 extends Phaser.Scene {
 
     this.pausaButton.on("pointerup", () => {
         this.pausaButton.setTexture("pausa1");
-        this.scene.launch("Pausa", { escenaActual: escenaActual });
+        this.scene.pause("Nivel3");
+        this.scene.launch("Pausa");
       })
       .setScrollFactor(0);
+
+
   }
 
   recolectarEstrellas(oso, estrella) {
@@ -233,6 +236,9 @@ export default class Nivel1 extends Phaser.Scene {
     // Ocultar el temporizador y el contador de objetos
     this.temporizadorTexto.setVisible(false);
     this.contadorTexto.setVisible(false);
+    this.estrellaImagen.setVisible(false);
+    this.temporizadorImagen.setVisible(false);
+
     // Si tienes un botón de pausa, ocúltalo también
     if (this.pausaButton) {
       this.pausaButton.setVisible(false);
