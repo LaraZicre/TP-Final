@@ -9,10 +9,13 @@ export default class Nivel1 extends Phaser.Scene {
     this.temporizador = 90;
     this.temporizadorActivo = true;
     this.objetivoEstrellas = 20;
+    this.nivelSuperado = false;
+    this.reintentarNivel = false;
+    this.escenaActual = "nivel3";
   }
 
   create() {
-    const escenaActual = "Nivel3";
+    
     //Load Map
     const map = this.make.tilemap({ key: "level3" });
     console.log(map);
@@ -96,15 +99,50 @@ export default class Nivel1 extends Phaser.Scene {
     //para que la camara no se vaya fuera del mapa
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
-    //sprite
-    this.estrellaImagen = this.add.sprite(800, 40, "estrella")
-    .setScrollFactor(0);
+    //sprite estrella
+    this.estrellaImagen = this.add
+      .sprite(800, 40, "estrella")
+      .setScrollFactor(0);
     this.contadorTexto = this.add.text(860, 40, "0", {
       fontFamily: "Pixellari",
       fontSize: "32px",
       fill: "#fff",
     });
     this.contadorTexto.setScrollFactor(0);
+
+    //sprite temporizador
+    this.temporizadorImagen = this.add
+      .sprite(900, 40, "reloj")
+      .setScrollFactor(0);
+    //texto que muestra el temporizador
+    this.temporizadorTexto = this.add
+      .text(940, 40, this.temporizador, {
+        fontFamily: "Pixellari",
+        fontSize: "32px",
+        fill: "#fff",
+      })
+      .setScrollFactor(0);
+
+    this.pausaButton = this.add.sprite(45, 55, "pausa1").setInteractive();
+    // Agrega eventos de clic a los botones.
+    this.pausaButton.on("pointerover", () => {
+      this.pausaButton.setTexture("pausa2");
+    });
+
+    this.pausaButton.on("pointerout", () => {
+      this.pausaButton.setTexture("pausa1");
+    });
+
+    this.pausaButton.on("pointerdown", () => {
+      this.pausaButton.setTexture("pausa2");
+    });
+
+    this.pausaButton
+      .on("pointerup", () => {
+        this.pausaButton.setTexture("pausa1");
+        this.scene.launch("Pausa", { escenaActual: this.escenaActual });
+      })
+      .setScrollFactor(0);
 
     //temporizador
     this.time.addEvent({
@@ -113,38 +151,6 @@ export default class Nivel1 extends Phaser.Scene {
       callbackScope: this,
       loop: true,
     });
-
-    //sprite temporizador
-    this.temporizadorImagen = this.add.sprite(900, 40, "reloj")
-    .setScrollFactor(0);
-    //texto que muestra el temporizador
-    this.temporizadorTexto = this.add.text(940, 40, this.temporizador, {
-        fontFamily: "Pixellari",
-        fontSize: "32px",
-        fill: "#fff",
-      })
-      .setScrollFactor(0);
-
-
-
-    const pausaButton = this.add.sprite(45, 55, "pausa1").setInteractive();
-    // Agrega eventos de clic a los botones.
-    pausaButton.on("pointerover", () => {
-      pausaButton.setTexture("pausa2");
-    });
-
-    pausaButton.on("pointerout", () => {
-      pausaButton.setTexture("pausa1");
-    });
-
-    pausaButton.on("pointerdown", () => {
-      pausaButton.setTexture("pausa2");
-    });
-
-    pausaButton.on("pointerup", () => {
-      pausaButton.setTexture("pausa1");
-      this.scene.launch("Pausa", { escenaActual: escenaActual });
-    }).setScrollFactor(0);
   }
 
   recolectarEstrellas(oso, estrella) {
@@ -158,7 +164,7 @@ export default class Nivel1 extends Phaser.Scene {
     estrella.disableBody(true, true);
   }
 
-  temporizadorDecreciendo(oso, estrella, lluviaDeComida) {
+  temporizadorDecreciendo() {
     // Si el temporizador está activo y no se ha ganado el juego
     if (
       this.temporizadorActivo &&
@@ -170,14 +176,14 @@ export default class Nivel1 extends Phaser.Scene {
     }
     // Si se alcanza el objetivo de recolección, el jugador gana
     if (this.contadorEstrellas >= this.objetivoEstrellas) {
+      // Setear condicion para ganar
+      this.nivelSuperado = true;
       // Detén el temporizador
       this.temporizadorActivo = false;
       //detener al oso
       this.detenerOso();
       //lluvia de comida
       this.lluviaDeComida(50, 0);
-      // Desaparecer la interfaz
-      this.ocultarInterfaz();
       // Esperar unos segundos y lanzar la escena de juego superado
       this.time.delayedCall(
         6000,
@@ -190,16 +196,13 @@ export default class Nivel1 extends Phaser.Scene {
     }
     // Si el temporizador llega a cero, el jugador pierde
     if (this.temporizador <= 0) {
-      this.scene.pause("Nivel3");
-      this.scene.launch("NivelPerdido");
+      this.reintentarNivel = true
     }
   }
 
   detenerOso() {
-    if (this.oso) {
       this.oso.setVelocity(0);
       this.oso.anims.play("turn");
-    }
   }
 
   lluviaDeComida(cantidad, velocidad) {
@@ -230,17 +233,14 @@ export default class Nivel1 extends Phaser.Scene {
     }
   }
 
-  ocultarInterfaz(temporizadorTexto, contadorTexto, pausaButton) {
+  ocultarInterfaz(pausaButton) {
     // Ocultar el temporizador y el contador de objetos
     this.temporizadorTexto.setVisible(false);
     this.contadorTexto.setVisible(false);
     this.estrellaImagen.setVisible(false);
     this.temporizadorImagen.setVisible(false);
-
-    // Si tienes un botón de pausa, ocúltalo también
-    if (this.pausaButton) {
-      this.pausaButton.setVisible(false);
-    }
+    // Ocultar boton pausa
+    pausaButton.setVisible(false);
   }
 
   update() {
@@ -261,12 +261,22 @@ export default class Nivel1 extends Phaser.Scene {
         this.oso.setVelocityX(0);
         this.oso.anims.play("turn");
       }
-
       //jump
       if (this.cursors.up.isDown && this.oso.body.blocked.down) {
         this.oso.anims.play("turn");
         this.oso.setVelocityY(-330);
       }
+    }
+    console.log(this.nivelSuperado)
+    if (this.nivelSuperado) {
+      this.ocultarInterfaz(this.pausaButton);
+    }
+
+    if (this.reintentarNivel) {
+      this.scene.pause("nivel3");
+      this.scene.launch("NivelPerdido", {
+        escenaActual: this.escenaActual, 
+      });
     }
   }
 }

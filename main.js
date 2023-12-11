@@ -9,6 +9,7 @@ import Pausa from "./src/scenes/Pausa.js";
 import NivelPerdido from "./src/scenes/NivelPerdido.js";
 import NivelGanado from "./src/scenes/NivelGanado.js";
 import JuegoSuperado from "./src/scenes/JuegoSuperado.js";
+import Creditos from "./src/scenes/Creditos.js";
 
 // Create a new Phaser config object
 const config = {
@@ -35,7 +36,7 @@ const config = {
     },
     
   },
-  scene: [Preload, Intro, Menu, Tutorial, Nivel1, Nivel2, Nivel3, Pausa, NivelGanado, NivelPerdido, JuegoSuperado],
+  scene: [Preload, Intro, Menu, Tutorial, Nivel1, Nivel2, Nivel3, Pausa, NivelGanado, NivelPerdido, JuegoSuperado, Creditos],
 };
 
 window.game = new Phaser.Game(config);

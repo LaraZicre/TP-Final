@@ -322,14 +322,14 @@ export default class Nivel1 extends Phaser.Scene {
     if (this.nivelSuperado) {
       this.scene.pause("nivel1");
       this.scene.launch("NivelGanado", {
-        escenaActual: this.escenaActual, //traspaso de data
+        escenaActual: this.escenaActual, 
       });
     }
 
     if (this.reintentarNivel) {
       this.scene.pause("nivel1");
       this.scene.launch("NivelPerdido", {
-        escenaActual: this.escenaActual, //traspaso de data
+        escenaActual: this.escenaActual, 
       });
     }
 }

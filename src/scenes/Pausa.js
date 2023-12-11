@@ -31,7 +31,7 @@ export default class Pausa extends Phaser.Scene {
     })
     volverButton.on("pointerdown", () => {
       volverButton.setTexture("atras2");
-      });
+    });
 
 
     // Agrega eventos de clic a los botones.
