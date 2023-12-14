@@ -11,7 +11,15 @@ export default class Tutorial extends Phaser.Scene {
     }
 
     create() {
-      this.add.image(496, 300, "tutoFondo");
+      this.add.image(496, 300, "tutoFondo").setScale(1.1);
+
+      this.textoPantallaCompleta = this.add.text(208, 323, "Presiona la tecla 'F' para jugar en pantalla completa", {
+        fontFamily: "Pixellari",
+        fontSize: "25px",
+        fill: "#ff4db3",
+      });
+
+      this.boton = this.sound.add("boton");
 
       // Boton volver
       const volverButton = this.add.sprite(45, 55, "atras1").setInteractive();
@@ -30,8 +38,12 @@ export default class Tutorial extends Phaser.Scene {
       
       volverButton.on("pointerup", () => 
           {volverButton.setTexture("atras1"); 
-          this.scene.start("Menu");
+          this.boton.play();
+          this.scene.stop("Tutorial");
+          this.scene.resume("Menu");
       });
+
+    
 
       // Sprites
 
@@ -44,7 +56,7 @@ export default class Tutorial extends Phaser.Scene {
       });
       teclas.play('idle')
 
-      const osoLeft = this.add.sprite(240, 510);
+      const osoLeft = this.add.sprite(240, 533);
       this.anims.create({
         key: "left",
         frames: this.anims.generateFrameNumbers("oso", { start: 0, end: 3 }),
@@ -53,7 +65,7 @@ export default class Tutorial extends Phaser.Scene {
       });
       osoLeft.play('left', true)
 
-      const osoRight = this.add.sprite(750, 510)
+      const osoRight = this.add.sprite(750, 533)
       this.anims.create({
         key: "right",
         frames: this.anims.generateFrameNumbers("oso", { start: 0, end: 3 }),
@@ -62,7 +74,7 @@ export default class Tutorial extends Phaser.Scene {
       });  
       osoRight.play('right', true)
 
-      const osoJump = this.add.sprite(496, 480)
+      const osoJump = this.add.sprite(496, 503)
       this.anims.create({
         key: "jump",
         frames: this.anims.generateFrameNumbers("osoJump", { start: 0, end: 54 }),

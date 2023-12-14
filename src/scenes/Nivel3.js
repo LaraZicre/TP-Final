@@ -15,7 +15,6 @@ export default class Nivel1 extends Phaser.Scene {
   }
 
   create() {
-    
     //Load Map
     const map = this.make.tilemap({ key: "level3" });
     console.log(map);
@@ -140,9 +139,28 @@ export default class Nivel1 extends Phaser.Scene {
     this.pausaButton
       .on("pointerup", () => {
         this.pausaButton.setTexture("pausa1");
-        this.scene.launch("Pausa", { escenaActual: this.escenaActual });
+        this.boton.play();
+        this.scene.pause("Nivel3");
+        this.scene.launch("Pausa", {
+          escenaActual: this.escenaActual,
+          musica: this.musica,
+        });
       })
       .setScrollFactor(0);
+
+    
+    this.musica = this.sound.add("musicaNivel3");
+    this.musica.play();
+
+    this.boton = this.sound.add("boton");
+    this.salto = this.sound.add("salto");
+    this.agarrar = this.sound.add("agarrar");
+
+    this.ganar = this.sound.add("ganarJuego");
+    this.events.once('winSoundEvent', function () {
+      // Play the sound once
+      this.ganar.play();
+  }, this);
 
     //temporizador
     this.time.addEvent({
@@ -162,6 +180,7 @@ export default class Nivel1 extends Phaser.Scene {
 
     // Elimina el postre recolectable
     estrella.disableBody(true, true);
+    this.agarrar.play();
   }
 
   temporizadorDecreciendo() {
@@ -184,9 +203,12 @@ export default class Nivel1 extends Phaser.Scene {
       this.detenerOso();
       //lluvia de comida
       this.lluviaDeComida(50, 0);
+      //detener musica y sonido de victoria
+      this.musica.stop();
+      this.events.emit('winSoundEvent');
       // Esperar unos segundos y lanzar la escena de juego superado
       this.time.delayedCall(
-        6000,
+        10000,
         function () {
           this.scene.launch("JuegoSuperado");
         },
@@ -196,13 +218,13 @@ export default class Nivel1 extends Phaser.Scene {
     }
     // Si el temporizador llega a cero, el jugador pierde
     if (this.temporizador <= 0) {
-      this.reintentarNivel = true
+      this.reintentarNivel = true;
     }
   }
 
   detenerOso() {
-      this.oso.setVelocity(0);
-      this.oso.anims.play("turn");
+    this.oso.setVelocity(0);
+    this.oso.anims.play("turn");
   }
 
   lluviaDeComida(cantidad, velocidad) {
@@ -263,19 +285,22 @@ export default class Nivel1 extends Phaser.Scene {
       }
       //jump
       if (this.cursors.up.isDown && this.oso.body.blocked.down) {
+        this.sound.play("salto");
         this.oso.anims.play("turn");
         this.oso.setVelocityY(-330);
       }
     }
-    console.log(this.nivelSuperado)
+
+    console.log(this.nivelSuperado);
     if (this.nivelSuperado) {
       this.ocultarInterfaz(this.pausaButton);
     }
 
     if (this.reintentarNivel) {
+      this.musica.stop();
       this.scene.pause("nivel3");
       this.scene.launch("NivelPerdido", {
-        escenaActual: this.escenaActual, 
+        escenaActual: this.escenaActual,
       });
     }
   }

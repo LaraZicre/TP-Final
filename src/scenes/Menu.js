@@ -3,10 +3,18 @@ export default class Menu extends Phaser.Scene {
     super("Menu");
   }
 
-  init() {
+  init(data) {
+    this.musica = data.musica;
+
   }
 
   create() {
+
+    this.musica = this.sound.add("musicaMenu");
+    this.musica.play();
+
+    this.boton = this.sound.add("boton");
+
     this.add.image(496, 300, "menuFondo").setScale(1.1);
 
     //añadir boton tutorial
@@ -15,16 +23,8 @@ export default class Menu extends Phaser.Scene {
     //añadir boton play
     this.playButton();
 
-    //pantalla completa
-    this.input.keyboard.on('keydown-F', function (event) {
-      if (this.scale.isFullscreen) {
-          this.scale.stopFullscreen();
-      } else {
-          this.scale.startFullscreen();
-      }
-  }, this);
-  
-  }
+
+}
 
   playButton() {
     //boton quieto
@@ -32,7 +32,6 @@ export default class Menu extends Phaser.Scene {
     //soltar boton
     playpointer.on("pointerup", () => {
       playpointer.setTexture("play2");
-      this.scene.start("Nivel1");
     });
     playpointer.on("pointerover", () => {
       playpointer.setTexture("play2");
@@ -44,42 +43,33 @@ export default class Menu extends Phaser.Scene {
     //presionar boton
     playpointer.on("pointerdown", () => {
       playpointer.setTexture("play3");
+      this.boton.play();
+      this.musica.stop({ loop: false });
+      this.scene.start("Nivel1");
     });
   }
 
   tutorialButton() {
     //boton quieto
     const tutopointer = this.add.sprite(50, 560, "tuto1").setInteractive();
+    //soltar boton
+    tutopointer.on("pointerup", () => {
+      tutopointer.setTexture("tuto2");
+    });
     tutopointer.on("pointerover", () => {
       tutopointer.setTexture("tuto2");
     });
-
-    //soltar boton
-    tutopointer.on(
-      "pointerup",
-      () => {
-        tutopointer.setTexture("tuto2");
-        this.scene.start("Tutorial");
-      },
-      this
-    );
     //mouse sobre boton
-    tutopointer.on("pointerout", () => {
+    tutopointer.on("pointerout", function () {
       tutopointer.setTexture("tuto1");
     });
     //presionar boton
     tutopointer.on("pointerdown", () => {
       tutopointer.setTexture("tuto3");
+      this.boton.play();
+      this.scene.pause("Menu");
+      this.scene.launch("Tutorial");
     });
-    //soltar boton
-    tutopointer.on(
-      "pointerup",
-      () => {
-        tutopointer.setTexture("tuto2");
-        this.scene.start("Tutorial");
-      },
-      this
-    );
   }
 
   update() {}

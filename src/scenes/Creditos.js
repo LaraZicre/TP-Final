@@ -12,7 +12,7 @@ export default class Creditos extends Phaser.Scene {
 
   create() {
     // cargar imagen
-    this.add.image(496, 300, "creditos");
+    this.add.image(496, 300, "creditos").setScale(1.1);
 
     this.textoSuperarJuego = this.add.text(345, 250, "Creditos", {
       fontFamily: "Pixellari",
@@ -36,9 +36,14 @@ export default class Creditos extends Phaser.Scene {
 
     menuButton.on("pointerup", () => {
       menuButton.setTexture("menu1");
+      this.musica.stop();
       this.scene.stop("Creditos");
       this.scene.start("Menu");
     });
+
+    this.musica = this.sound.add("musicaCreditos");
+    this.musica.play();
+      
   }
 
   update() {}

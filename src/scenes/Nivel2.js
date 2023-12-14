@@ -37,7 +37,7 @@ export default class Nivel2 extends Phaser.Scene {
 
     const capaobjetos = map.getObjectLayer("objetos");
 
-    const candado = this.add.sprite(838, 50, "candado1").setDepth(3);
+    const candado = this.add.sprite(496, 50, "candado1").setDepth(3);
     // Configurar un evento personalizado llamado 'abrirCandado'
     this.events.on("abrirCandado", function () {
       candado.setTexture("candado2");
@@ -159,17 +159,52 @@ export default class Nivel2 extends Phaser.Scene {
       }
     });
 
+    // Inicia el contador desde 5 segundos
+    let tiempoRestante = 5;
+
+    // Configura y muestra el texto del contador
+    const contadorTexto = this.add.text(480, 270, tiempoRestante, {
+      fontFamily: "Pixellari",
+      fontSize: "80px",
+      fill: "#ff4db3",
+    });
+    contadorTexto.setOrigin(0.5);
+
+    // Configura un temporizador para actualizar el contador cada segundo
+    const temporizador = this.time.addEvent({
+      delay: 1000, // 1000 milisegundos = 1 segundo
+      callback: () => {
+        tiempoRestante--;
+
+        // Actualiza el texto del contador
+        contadorTexto.setText(tiempoRestante);
+
+        // Verifica si el contador llegó a cero
+        if (tiempoRestante === 0) {
+          // Hacer algo cuando el contador llega a cero, por ejemplo, voltear cartas
+          this.cartas.children.iterate((objeto) => {
+            objeto.setTexture("cartareverso");
+          });
+          this.moverOso = false;
+
+          // Elimina el texto del contador
+          contadorTexto.destroy();
+
+          // Detén el temporizador
+          temporizador.remove();
+        }
+      },
+      callbackScope: this,
+      loop: true, // Repetir el temporizador
+    });
+
     // Pausa antes de voltear cartas
     this.time.addEvent({
-      delay: 5000, // tiempo en milisegundos (en este caso, 2000 ms = 2 segundos)
+      delay: 5000, // tiempo en milisegundos (en este caso, 5000 ms = 5 segundos)
       callback: () => {
-        //Cambiar la textura de todos los elementos en el grupo
-        this.cartas.children.iterate((objeto) => {
-          objeto.setTexture("cartareverso");
-        });
-        this.moverOso = false;
+        // Este código se ejecutará después de 5 segundos
       },
-      // esto significa que el evento se ejecutará solo una vez
+      // Esto significa que el evento se ejecutará solo una vez
       loop: false,
     });
 
@@ -189,9 +224,22 @@ export default class Nivel2 extends Phaser.Scene {
 
     pausaButton.on("pointerup", () => {
       pausaButton.setTexture("pausa1");
+      this.boton.play();
       this.scene.pause("Nivel2");
-      this.scene.launch("Pausa", { escenaActual: this.escenaActual });
+      this.scene.launch("Pausa", {
+        escenaActual: this.escenaActual,
+        musica: this.musica,
+      });
     });
+
+    this.musica = this.sound.add("musicaNivel2");
+    this.musica.play();
+
+    this.boton = this.sound.add("boton");
+    this.salto = this.sound.add("salto");
+    this.agarrar = this.sound.add("agarrar");
+    this.abrirCandado = this.sound.add("abrirCandado");
+    this.caerTablero = this.sound.add("sonidoTablero");
   }
 
   detenerOso() {
@@ -202,6 +250,7 @@ export default class Nivel2 extends Phaser.Scene {
   recolectarCartas(oso, carta, capapisocaja) {
     const tipoCarta = carta.name;
     carta.destroy();
+    this.agarrar.play();
     if (this.cartasComparada === "") {
       this.cartasComparada = tipoCarta;
       console.log("carta comparada despues del if: ", this.cartasComparada);
@@ -209,19 +258,23 @@ export default class Nivel2 extends Phaser.Scene {
       if (tipoCarta === this.cartasComparada) {
         switch (tipoCarta) {
           case "tierra": {
-            this.add.sprite(129, 38, tipoCarta);
+            this.add.sprite(405, 65, tipoCarta);
+            this.caerTablero.play();
             break;
           }
           case "agua": {
-            this.add.sprite(129, 38, tipoCarta);
+            this.add.sprite(397, 65, tipoCarta);
+            this.caerTablero.play();
             break;
           }
           case "fuego": {
-            this.add.sprite(129, 38, tipoCarta);
+            this.add.sprite(129, 65, tipoCarta);
+            this.caerTablero.play();
             break;
           }
           case "aire": {
-            this.add.sprite(129, 38, tipoCarta);
+            this.add.sprite(351, 65, tipoCarta);
+            this.caerTablero.play();
             break;
           }
         }
@@ -234,6 +287,7 @@ export default class Nivel2 extends Phaser.Scene {
     if (this.cartasRecolectadas === 4) {
       // Emitir el evento 'abrirCandado' cuando se cumple la condición
       this.events.emit("abrirCandado");
+      this.abrirCandado.play();
       // Si son iguales, realiza las acciones correspondientes
       capapisocaja.setCollisionByProperty({ colision: true }, false);
     }
@@ -268,12 +322,14 @@ export default class Nivel2 extends Phaser.Scene {
 
       //jump
       if (this.cursors.up.isDown && this.oso.body.blocked.down) {
+        this.sound.play("salto");
         this.oso.anims.play("turn");
         this.oso.setVelocityY(-330);
       }
     }
 
     if (this.nivelSuperado) {
+      this.musica.stop();
       this.scene.pause("nivel2");
       this.scene.launch("NivelGanado", {
         escenaActual: this.escenaActual,
@@ -281,6 +337,7 @@ export default class Nivel2 extends Phaser.Scene {
     }
 
     if (this.reintentarNivel) {
+      this.musica.stop();
       this.scene.pause("nivel2");
       this.scene.launch("NivelPerdido", {
         escenaActual: this.escenaActual,

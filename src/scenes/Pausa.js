@@ -7,10 +7,10 @@ export default class Pausa extends Phaser.Scene {
 
   init(data) {
     this.escenaActual = data.escenaActual;
+    this.musica = data.musica;
   }
 
   create() {
-
     // Cargar la imagen transparente como fondo.
     this.add.image(496, 300, "popUp");
 
@@ -20,34 +20,34 @@ export default class Pausa extends Phaser.Scene {
       fill: "#ff4db3",
     });
 
-    const volverButton = this.add.sprite(400, 350, "atras1").setInteractive();
+    this.boton = this.sound.add("boton");
 
+    const volverButton = this.add.sprite(400, 350, "atras1").setInteractive();
 
     volverButton.on("pointerover", () => {
       volverButton.setTexture("atras2");
-    })
+    });
     volverButton.on("pointerout", () => {
       volverButton.setTexture("atras1");
-    })
+    });
     volverButton.on("pointerdown", () => {
       volverButton.setTexture("atras2");
     });
 
-
     // Agrega eventos de clic a los botones.
-    volverButton.on("pointerup", () =>  {
-        console.log(this.escenaActual)
-        this.scene.stop()
-        if (this.escenaActual === "nivel1") {
-          console.log("entro al if")
-          this.scene.stop("Pausa")
-          this.scene.resume("Nivel1");
-        } else if (this.escenaActual === "nivel2") {
-          this.scene.resume("Nivel2");
-        } else if (this.escenaActual === "nivel3"){ 
-          this.scene.resume("Nivel3");
-        };
-    })
+    volverButton.on("pointerup", () => {
+      this.boton.play();
+      this.scene.stop();
+      if (this.escenaActual === "nivel1") {
+        this.scene.stop("Pausa");
+        this.musica.resume(this.escenaActual);
+        this.scene.resume("Nivel1");
+      } else if (this.escenaActual === "nivel2") {
+        this.scene.resume("Nivel2");
+      } else if (this.escenaActual === "nivel3") {
+        this.scene.resume("Nivel3");
+      }
+    });
 
     const menuButton = this.add.sprite(570, 350, "menu1").setInteractive();
     // Agrega eventos de clic a los botones.
@@ -65,12 +65,13 @@ export default class Pausa extends Phaser.Scene {
 
     menuButton.on("pointerup", () => {
       menuButton.setTexture("menu1");
+      this.boton.play();
       this.scene.stop("Pausa");
       if (this.escenaActual === "nivel1") {
         this.scene.stop("Nivel1");
       } else if (this.escenaActual === "nivel2") {
         this.scene.stop("Nivel2");
-      } else if (this.escenaActual === "nivel3"){ 
+      } else if (this.escenaActual === "nivel3") {
         this.scene.stop("Nivel3");
       }
       this.scene.start("Menu");

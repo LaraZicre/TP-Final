@@ -33,6 +33,10 @@ export default class NivelPerdido extends Phaser.Scene {
       fill: "#ff4db3",
     });
 
+    this.boton = this.sound.add("boton");
+    this.perderNivel = this.sound.add("perderNivel");
+
+    this.perderNivel.play();
 
     const reintentarButton = this.add
       .sprite(400, 370, "reintentar1")
@@ -51,6 +55,8 @@ export default class NivelPerdido extends Phaser.Scene {
     });
 
     reintentarButton.on("pointerup", () => {
+      reintentarButton.setTexture("reintentar1");
+      this.boton.play();
       if (this.escenaActual === "nivel1") {
         this.scene.start("Nivel1");
       } else if (this.escenaActual === "nivel2") {
@@ -76,6 +82,7 @@ export default class NivelPerdido extends Phaser.Scene {
 
     menuButton.on("pointerup", () => {
       menuButton.setTexture("menu1");
+      this.boton.play();
       this.scene.stop("NivelPerdido");
       if (this.escenaActual === "nivel1") {
         this.scene.stop("Nivel1");
@@ -86,6 +93,7 @@ export default class NivelPerdido extends Phaser.Scene {
       }
       this.scene.start("Menu");
     });
+      
   }
 
   update() {}

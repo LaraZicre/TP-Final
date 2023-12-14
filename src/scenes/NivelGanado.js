@@ -19,65 +19,72 @@ export default class NivelGanado extends Phaser.Scene {
       fill: "#ff4db3",
     });
 
+    this.boton = this.sound.add("boton");
+
+
+
     const continuarButton = this.add
-      .sprite(400, 350, "seguir1")
-      .setInteractive();
-    // Agrega eventos de clic a los botones.
-    continuarButton
-    .on("pointerup", () => {
-      console.log("aprieta boton")
-      console.log(this.escenaActual)
-      continuarButton.setTexture("seguir1");
-      if (this.escenaActual === "nivel1") {
-        console.log("entra al if")
-        this.scene.stop("Nivel1");
-        this.scene.stop("NivelGanado");
-        this.scene.start("Nivel2");
-
-      }
-      else if (this.escenaActual === "nivel2") {
-        this.scene.stop("Nivel2");
-        this.scene.stop("NivelGanado");
-        this.scene.start("Nivel3");
-      }
-    })
-    .on("pointerover", () => {
-      continuarButton.setTexture("seguir2");
-    })
-    .on("pointerout", () => {
-      continuarButton.setTexture("seguir1");
-    })
-    .on("pointerdown", () => {
-      continuarButton.setTexture("seguir2");
-    });
-
-    const menuButton = this.add.sprite(570, 350, "menu1").setInteractive();
-    // Agrega eventos de clic a los botones.
-    menuButton.on("pointerover", () => {
-      menuButton.setTexture("menu2");
-    });
-
-    menuButton.on("pointerout", () => {
-      menuButton.setTexture("menu1");
-    });
-
-    menuButton.on("pointerdown", () => {
-      menuButton.setTexture("menu2");
-    });
-
-    menuButton.on("pointerup", () => {
-      menuButton.setTexture("menu1");
+    .sprite(400, 350, "seguir1")
+    .setInteractive();
+  // Agrega eventos de clic a los botones.
+  continuarButton.on("pointerup", () => {
+    console.log(this.escenaActual)
+    continuarButton.setTexture("seguir1");
+    this.boton.play();
+    if (this.escenaActual === "nivel1") {
+      this.scene.stop("Nivel1");
       this.scene.stop("NivelGanado");
-      if (this.escenaActual === "nivel1") {
-        this.scene.stop("Nivel1");
-      } else if (this.escenaActual === "nivel2") {
-        this.scene.stop("Nivel2");
-      } else if (this.escenaActual === "nivel3"){ 
-        this.scene.stop("Nivel3");
-      }
-      this.scene.start("Menu");
-    });
+      this.scene.start("Nivel2");
+
+    }
+    else if (this.escenaActual === "nivel2") {
+      this.scene.stop("Nivel2");
+      this.scene.stop("NivelGanado");
+      this.scene.start("Nivel3");
+    }
+  })
+  continuarButton.on("pointerover", () => {
+    continuarButton.setTexture("seguir2");
+  })
+  continuarButton.on("pointerout", () => {
+    continuarButton.setTexture("seguir1");
+  })
+  continuarButton.on("pointerdown", () => {
+    continuarButton.setTexture("seguir2");
+  });
+
+  const menuButton = this.add.sprite(570, 350, "menu1").setInteractive();
+  // Agrega eventos de clic a los botones.
+  menuButton.on("pointerover", () => {
+    menuButton.setTexture("menu2");
+  });
+
+  menuButton.on("pointerout", () => {
+    menuButton.setTexture("menu1");
+  });
+
+  menuButton.on("pointerdown", () => {
+    menuButton.setTexture("menu2");
+  });
+
+  menuButton.on("pointerup", () => {
+    menuButton.setTexture("menu1");
+    this.boton.play();
+    this.scene.stop("NivelGanado");
+    if (this.escenaActual === "nivel1") {
+      this.scene.stop("Nivel1");
+    } else if (this.escenaActual === "nivel2") {
+      this.scene.stop("Nivel2");
+    } else if (this.escenaActual === "nivel3"){ 
+      this.scene.stop("Nivel3");
+    }
+    this.scene.start("Menu");
+  });
+    
+
   }
 
-  update() {}
+  update() {
+    
+  }
 }

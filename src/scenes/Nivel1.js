@@ -16,6 +16,7 @@ export default class Nivel1 extends Phaser.Scene {
     const map = this.make.tilemap({ key: "level1" });
     console.log(map);
 
+
     //Is the name of the tilesSet in tiled json
     const tileset = map.addTilesetImage("TilesetFondo", "tiles");
     const tablero = map.addTilesetImage("Tablerotile", "tablero");
@@ -125,10 +126,23 @@ export default class Nivel1 extends Phaser.Scene {
 
     pausaButton.on("pointerup", () => {
       pausaButton.setTexture("pausa1");
+      this.musica.pause();
+      this.boton.play();
       this.scene.pause("Nivel1");
       // Lanza la escena de pausa y pasa la clave de la escena actual
-      this.scene.launch("Pausa", { escenaActual: this.escenaActual });
+      this.scene.launch("Pausa", { escenaActual: this.escenaActual, musica: this.musica  });
     });
+
+    this.musica = this.sound.add("musicaNivel1");
+    this.musica.play();
+
+    this.boton = this.sound.add("boton");
+    this.salto = this.sound.add("salto");
+    this.agarrar = this.sound.add("agarrar");
+    this.abrirCandado = this.sound.add("abrirCandado");
+    this.caerTablero = this.sound.add("sonidoTablero");
+
+
   }
 
   crearDados(capaobjetos, dados) {
@@ -218,6 +232,7 @@ export default class Nivel1 extends Phaser.Scene {
 
     this.dadosRecolectados.push(dado.texture.key);
     dado.disableBody(true, true);
+    this.agarrar.play();
 
     // No verifiques después de cada recolección, espera hasta recolectar todos los dados
     if (this.dadosRecolectados.length === 10) {
@@ -227,6 +242,7 @@ export default class Nivel1 extends Phaser.Scene {
       if (sonIguales) {
         // Emitir el evento 'abrirCandado' cuando se cumple la condición
         this.events.emit("abrirCandado");
+        this.abrirCandado.play();
 
         // Si son iguales, realiza las acciones correspondientes
         capapisocaja.setCollisionByProperty({ colision: true }, false);
@@ -239,58 +255,69 @@ export default class Nivel1 extends Phaser.Scene {
     switch (dado.texture.key) {
       case "d1": {
         dado.enableBody(true, 129, 38, true, true);
+        this.caerTablero.play();
         break;
       }
 
       case "d2": {
         dado.enableBody(true, 196, 38, true, true);
+        this.caerTablero.play();
         break;
       }
 
       case "d3": {
         dado.enableBody(true, 263, 38, true, true);
+        this.caerTablero.play();
         break;
       }
 
       case "d4": {
         dado.enableBody(true, 332, 38, true, true);
+        this.caerTablero.play();
         break;
       }
 
       case "d5": {
         dado.enableBody(true, 400, 38, true, true);
+        this.caerTablero.play();
         break;
       }
 
       case "d6": {
         dado.enableBody(true, 468, 38, true, true);
+        this.caerTablero.play();
         break;
       }
 
       case "d7": {
         dado.enableBody(true, 536, 38, true, true);
+        this.caerTablero.play();
         break;
       }
 
       case "d8": {
         dado.enableBody(true, 604, 38, true, true);
+        this.caerTablero.play();
         break;
       }
 
       case "d9": {
         dado.enableBody(true, 671, 38, true, true);
+        this.caerTablero.play();
         break;
       }
 
       case "d10": {
         dado.enableBody(true, 740, 38, true, true);
+        this.caerTablero.play();
         break;
       }
+
     }
+
   }
 
   recolectarPremio(sonIguales, oso) {
-    //reproducir sonido
     this.medialuna.destroy();
     this.nivelSuperado = true
 
@@ -315,19 +342,22 @@ export default class Nivel1 extends Phaser.Scene {
     }
     //jump
     if (this.cursors.up.isDown && this.oso.body.blocked.down) {
+      this.sound.play("salto");
       this.oso.anims.play("turn");
       this.oso.setVelocityY(-250);
     }
 
     if (this.nivelSuperado) {
-      this.scene.pause("nivel1");
+      this.musica.stop();
+      this.scene.pause("Nivel1");
       this.scene.launch("NivelGanado", {
         escenaActual: this.escenaActual, 
       });
     }
 
     if (this.reintentarNivel) {
-      this.scene.pause("nivel1");
+      this.musica.stop();
+      this.scene.pause("Nivel1");
       this.scene.launch("NivelPerdido", {
         escenaActual: this.escenaActual, 
       });

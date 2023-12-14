@@ -91,6 +91,27 @@ export default class Preload extends Phaser.Scene {
       this.load.image("postre2", "public/assets/images/Food/postre2.png");
       this.load.image("postre3", "public/assets/images/Food/postre3.png");
 
+      //AUDIO
+      //musica
+      this.load.audio("musicaMenu", "public/assets/music/Lesiakower-cutesong-Menu.mp3");
+      this.load.audio("musicaCinematica", "public/assets/music/K00sin-highway-Cinematica.mp3");
+      this.load.audio("musicaNivel1", "public/assets/music/moodmode-8-bit-dream-land-Nivel1.mp3");
+      this.load.audio("musicaNivel2", "public/assets/music/august_rain-future-8bit-Nivel2.mp3");
+      this.load.audio("musicaNivel3", "public/assets/music/Lightyeartraxx-kim-lightyear-legends-Nivel3.mp3");
+      this.load.audio("musicaCreditos", "public/assets/music/Lesiakower-waiting-time-Creditos.mp3");
+
+      //SFX
+      this.load.audio("boton", "public/assets/music/SFX/sfx-button-beep.mp3");
+      this.load.audio("salto", "public/assets/music/SFX/sfx-jump.mp3");
+      this.load.audio("sonidoTablero", "public/assets/music/SFX/sfx-Lesiakower-impact-sound-domino.mp3");
+      this.load.audio("agarrar", "public/assets/music/SFX/sfx-pickup.mp3");
+      this.load.audio("abrirCandado", "public/assets/music/SFX/sfx-Lesiakower-open-lock.mp3");
+      this.load.audio("ganarNivel", "public/assets/music/SFX/sfx-win-level.mp3");
+      this.load.audio("perderNivel", "public/assets/music/SFX/sfx-game-over.mp3");
+      this.load.audio("ganarJuego", "public/assets/music/SFX/sfx-win-game.mp3");
+
+      //tipografia
+      this.load.bitmapFont("Pixellari", "public/assets/fonts/Pixellari.ttf");
       //spritesheet oso
       this.load.spritesheet("oso", "./public/assets/images/SpriteSheet/oso 40x60.png", {
         frameWidth: 40,
@@ -122,11 +143,7 @@ export default class Preload extends Phaser.Scene {
       });  
 
 
-
     }
-
-
-  
 
     update() {
       this.scene.start("Intro");

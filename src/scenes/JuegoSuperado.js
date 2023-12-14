@@ -12,14 +12,27 @@ export default class JuegoSuperado extends Phaser.Scene {
       // Cargar la imagen transparente como fondo.
       this.add.image(496, 300, "popUpGanarJuego");
 
-      this.textoSuperarJuego = this.add.text(345, 250, "¡Felicitaciones!", {
+      this.textoSuperarNivel = this.add.text(327, 190, "¡Felicitaciones!", {
         fontFamily: "Pixellari",
-        fontSize: "30px",
+        fontSize: "50px",
+        fill: "#ff4db3",
+      });
+  
+  
+        this.textoSuperarNivel1 = this.add.text(305, 250, "¡Has superado todos los desafíos!", {
+        fontFamily: "Pixellari",
+        fontSize: "25px",
+        fill: "#ff4db3",
+      });
+  
+      this.textoSuperarNivel2 = this.add.text(360, 300, "Ahora Osito se irá a dormir...", {
+        fontFamily: "Pixellari",
+        fontSize: "20px",
         fill: "#ff4db3",
       });
   
       const continuarButton = this.add
-        .sprite(400, 350, "seguir1")
+        .sprite(485, 380, "seguir1")
         .setInteractive();
       // Agrega eventos de clic a los botones.
       continuarButton.on("pointerover", () => {
@@ -41,6 +54,8 @@ export default class JuegoSuperado extends Phaser.Scene {
           this.scene.start("Creditos");
         }
       });
+
+
     }
   
     update() {}

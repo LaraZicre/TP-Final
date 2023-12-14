@@ -39,4 +39,5 @@ const config = {
   scene: [Preload, Intro, Menu, Tutorial, Nivel1, Nivel2, Nivel3, Pausa, NivelGanado, NivelPerdido, JuegoSuperado, Creditos],
 };
 
+
 window.game = new Phaser.Game(config);
