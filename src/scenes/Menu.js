@@ -5,11 +5,9 @@ export default class Menu extends Phaser.Scene {
 
   init(data) {
     this.musica = data.musica;
-
   }
 
   create() {
-
     this.musica = this.sound.add("musicaMenu");
     this.musica.play();
 
@@ -22,9 +20,7 @@ export default class Menu extends Phaser.Scene {
 
     //añadir boton play
     this.playButton();
-
-
-}
+  }
 
   playButton() {
     //boton quieto
@@ -45,7 +41,7 @@ export default class Menu extends Phaser.Scene {
       playpointer.setTexture("play3");
       this.boton.play();
       this.musica.stop({ loop: false });
-      this.scene.start("Creditos");
+      this.scene.start("CinematicaIntro");
     });
   }
 
