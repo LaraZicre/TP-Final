@@ -163,7 +163,7 @@ export default class Nivel2 extends Phaser.Scene {
     let tiempoRestante = 5;
 
     // Configura y muestra el texto del contador
-    const contadorTexto = this.add.text(480, 270, tiempoRestante, {
+    const contadorTexto = this.add.text(494, 170, tiempoRestante, {
       fontFamily: "Pixellari",
       fontSize: "80px",
       fill: "#ff4db3",
@@ -181,7 +181,7 @@ export default class Nivel2 extends Phaser.Scene {
 
         // Verifica si el contador llegó a cero
         if (tiempoRestante === 0) {
-          // Hacer algo cuando el contador llega a cero, por ejemplo, voltear cartas
+          // voltear cartas cuando el contador llega a cero
           this.cartas.children.iterate((objeto) => {
             objeto.setTexture("cartareverso");
           });
@@ -264,12 +264,12 @@ export default class Nivel2 extends Phaser.Scene {
             break;
           }
           case "agua": {
-            this.add.sprite(397, 65, tipoCarta);
+            this.add.sprite(588, 65, tipoCarta);
             this.caerTablero.play();
             break;
           }
           case "fuego": {
-            this.add.sprite(129, 65, tipoCarta);
+            this.add.sprite(642, 65, tipoCarta);
             this.caerTablero.play();
             break;
           }
@@ -289,7 +289,6 @@ export default class Nivel2 extends Phaser.Scene {
       // Emitir el evento 'abrirCandado' cuando se cumple la condición
       this.events.emit("abrirCandado");
       this.abrirCandado.play();
-      // Si son iguales, realiza las acciones correspondientes
       capapisocaja.setCollisionByProperty({ colision: true }, false);
     }
   }

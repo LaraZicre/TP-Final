@@ -9,10 +9,9 @@ export default class NivelPerdido extends Phaser.Scene {
     this.escenaActual = data.escenaActual;
   }
 
-
   create() {
     // Cargar la imagen transparente como fondo.
-    this.add.image(496, 300, "popUp");
+    this.add.image(496, 300, "popUp").setScale(1.1);
 
     this.textoPerderNivel = this.add.text(430, 190, "¡Ups!", {
       fontFamily: "Pixellari",
@@ -20,18 +19,22 @@ export default class NivelPerdido extends Phaser.Scene {
       fill: "#ff4db3",
     });
 
-
     this.textoPerderNivel = this.add.text(345, 250, "La comida no apareció", {
       fontFamily: "Pixellari",
       fontSize: "30px",
       fill: "#ff4db3",
     });
 
-    this.textoPerderNivel1 = this.add.text(315, 285, "¡Volvamos a intentarlo!", {
-      fontFamily: "Pixellari",
-      fontSize: "35px",
-      fill: "#ff4db3",
-    });
+    this.textoPerderNivel1 = this.add.text(
+      315,
+      285,
+      "¡Volvamos a intentarlo!",
+      {
+        fontFamily: "Pixellari",
+        fontSize: "35px",
+        fill: "#ff4db3",
+      }
+    );
 
     this.boton = this.sound.add("boton");
     this.perderNivel = this.sound.add("perderNivel");
@@ -61,11 +64,11 @@ export default class NivelPerdido extends Phaser.Scene {
         this.scene.start("Nivel1");
       } else if (this.escenaActual === "nivel2") {
         this.scene.start("Nivel2");
-      } else if (this.escenaActual === "nivel3"){ 
+      } else if (this.escenaActual === "nivel3") {
         this.scene.start("Nivel3");
       }
-    })
-    
+    });
+
     const menuButton = this.add.sprite(570, 370, "menu1").setInteractive();
     // Agrega eventos de clic a los botones.
     menuButton.on("pointerover", () => {
@@ -88,12 +91,11 @@ export default class NivelPerdido extends Phaser.Scene {
         this.scene.stop("Nivel1");
       } else if (this.escenaActual === "nivel2") {
         this.scene.stop("Nivel2");
-      } else if (this.escenaActual === "nivel3"){ 
+      } else if (this.escenaActual === "nivel3") {
         this.scene.stop("Nivel3");
       }
       this.scene.start("Menu");
     });
-      
   }
 
   update() {}

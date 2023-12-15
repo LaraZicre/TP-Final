@@ -16,7 +16,6 @@ export default class Nivel1 extends Phaser.Scene {
     const map = this.make.tilemap({ key: "level1" });
     console.log(map);
 
-
     //Is the name of the tilesSet in tiled json
     const tileset = map.addTilesetImage("TilesetFondo", "tiles");
     const tablero = map.addTilesetImage("Tablerotile", "tablero");
@@ -36,7 +35,8 @@ export default class Nivel1 extends Phaser.Scene {
     const capaobjetos = map.getObjectLayer("objetos");
 
     const candado = this.add.sprite(838, 50, "candado1").setDepth(3);
-    // Configurar un evento personalizado llamado 'abrirCandado'
+
+    //configurar un evento personalizado llamado 'abrirCandado'
     this.events.on("abrirCandado", function () {
       candado.setTexture("candado2");
     });
@@ -44,9 +44,9 @@ export default class Nivel1 extends Phaser.Scene {
     //Load object for player from tiles
     let spawntPoint = map.findObject("objetos", (obj) => obj.name === "oso");
     console.log(spawntPoint);
+
     //add sprite to the player
     this.oso = this.physics.add.sprite(spawntPoint.x, spawntPoint.y, "oso");
-
     //Player physics properties. Give the little guy a slight bounce.
     this.oso.setBounce(0.1);
     this.oso.setCollideWorldBounds(true);
@@ -121,7 +121,7 @@ export default class Nivel1 extends Phaser.Scene {
     });
 
     pausaButton.on("pointerdown", () => {
-     pausaButton.setTexture("pausa2");
+      pausaButton.setTexture("pausa2");
     });
 
     pausaButton.on("pointerup", () => {
@@ -130,7 +130,10 @@ export default class Nivel1 extends Phaser.Scene {
       this.boton.play();
       this.scene.pause("Nivel1");
       // Lanza la escena de pausa y pasa la clave de la escena actual
-      this.scene.launch("Pausa", { escenaActual: this.escenaActual, musica: this.musica  });
+      this.scene.launch("Pausa", {
+        escenaActual: this.escenaActual,
+        musica: this.musica,
+      });
     });
 
     this.musica = this.sound.add("musicaNivel1");
@@ -141,8 +144,6 @@ export default class Nivel1 extends Phaser.Scene {
     this.agarrar = this.sound.add("agarrar");
     this.abrirCandado = this.sound.add("abrirCandado");
     this.caerTablero = this.sound.add("sonidoTablero");
-
-
   }
 
   crearDados(capaobjetos, dados) {
@@ -234,7 +235,7 @@ export default class Nivel1 extends Phaser.Scene {
     dado.disableBody(true, true);
     this.agarrar.play();
 
-    // No verifiques después de cada recolección, espera hasta recolectar todos los dados
+    //para verificar se espera hasta recolectar todos los dados
     if (this.dadosRecolectados.length === 10) {
       var sonIguales =
         JSON.stringify(ordenDados) === JSON.stringify(this.dadosRecolectados);
@@ -244,10 +245,10 @@ export default class Nivel1 extends Phaser.Scene {
         this.events.emit("abrirCandado");
         this.abrirCandado.play();
 
-        // Si son iguales, realiza las acciones correspondientes
+        // Si son iguales, desbloquea el premio
         capapisocaja.setCollisionByProperty({ colision: true }, false);
       } else {
-        // Si no son iguales, realiza las acciones correspondientes
+        // Si no son iguales, reintentar
         this.reintentarNivel = true;
       }
     }
@@ -312,15 +313,12 @@ export default class Nivel1 extends Phaser.Scene {
         this.caerTablero.play();
         break;
       }
-
     }
-
   }
 
   recolectarPremio(sonIguales, oso) {
     this.medialuna.destroy();
-    this.nivelSuperado = true
-
+    this.nivelSuperado = true;
   }
 
   update() {
@@ -351,7 +349,7 @@ export default class Nivel1 extends Phaser.Scene {
       this.musica.stop();
       this.scene.pause("Nivel1");
       this.scene.launch("NivelGanado", {
-        escenaActual: this.escenaActual, 
+        escenaActual: this.escenaActual,
       });
     }
 
@@ -359,8 +357,8 @@ export default class Nivel1 extends Phaser.Scene {
       this.musica.stop();
       this.scene.pause("Nivel1");
       this.scene.launch("NivelPerdido", {
-        escenaActual: this.escenaActual, 
+        escenaActual: this.escenaActual,
       });
     }
-}
+  }
 }

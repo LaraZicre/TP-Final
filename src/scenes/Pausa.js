@@ -12,7 +12,7 @@ export default class Pausa extends Phaser.Scene {
 
   create() {
     // Cargar la imagen transparente como fondo.
-    this.add.image(496, 300, "popUp");
+    this.add.image(496, 300, "popUp").setScale(1.1);
 
     this.textoPausa = this.add.text(390, 200, "PAUSA", {
       fontFamily: "Pixellari",

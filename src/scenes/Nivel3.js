@@ -88,7 +88,7 @@ export default class Nivel1 extends Phaser.Scene {
 
     // Configuración del grupo de postres
     this.grupoDePostres = this.physics.add.group();
-    // Configura la colisión con el suelo o cualquier otra lógica necesaria
+    // Configura la colisión con el suelo
     this.physics.add.collider(this.grupoDePostres, capatiles);
 
     //camara
@@ -100,9 +100,9 @@ export default class Nivel1 extends Phaser.Scene {
 
     //sprite estrella
     this.estrellaImagen = this.add
-      .sprite(800, 40, "estrella")
+      .sprite(800, 55, "estrella")
       .setScrollFactor(0);
-    this.contadorTexto = this.add.text(860, 40, "0", {
+    this.contadorTexto = this.add.text(833, 41, "0", {
       fontFamily: "Pixellari",
       fontSize: "32px",
       fill: "#fff",
@@ -111,11 +111,11 @@ export default class Nivel1 extends Phaser.Scene {
 
     //sprite temporizador
     this.temporizadorImagen = this.add
-      .sprite(900, 40, "reloj")
+      .sprite(895, 55, "reloj")
       .setScrollFactor(0);
     //texto que muestra el temporizador
     this.temporizadorTexto = this.add
-      .text(940, 40, this.temporizador, {
+      .text(915, 41, this.temporizador, {
         fontFamily: "Pixellari",
         fontSize: "32px",
         fill: "#fff",
@@ -149,7 +149,6 @@ export default class Nivel1 extends Phaser.Scene {
       })
       .setScrollFactor(0);
 
-    
     this.musica = this.sound.add("musicaNivel3");
     this.musica.play();
 
@@ -158,10 +157,14 @@ export default class Nivel1 extends Phaser.Scene {
     this.agarrar = this.sound.add("agarrar");
 
     this.ganar = this.sound.add("ganarJuego");
-    this.events.once('winSoundEvent', function () {
-      // Play the sound once
-      this.ganar.play();
-  }, this);
+    this.events.once(
+      "winSoundEvent",
+      function () {
+        // reproduce el sonido una vez
+        this.ganar.play();
+      },
+      this
+    );
 
     //temporizador
     this.time.addEvent({
@@ -179,7 +182,7 @@ export default class Nivel1 extends Phaser.Scene {
     // Actualiza el texto del marcador
     this.contadorTexto.setText(this.contadorEstrellas);
 
-    // Elimina el postre recolectable
+    // Elimina el objeto recolectable
     estrella.disableBody(true, true);
     this.agarrar.play();
   }
@@ -206,7 +209,7 @@ export default class Nivel1 extends Phaser.Scene {
       this.lluviaDeComida(50, 0);
       //detener musica y sonido de victoria
       this.musica.stop();
-      this.events.emit('winSoundEvent');
+      this.events.emit("winSoundEvent");
       // Esperar unos segundos y lanzar la escena de juego superado
       this.time.delayedCall(
         10000,

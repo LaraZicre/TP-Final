@@ -25,7 +25,7 @@ export default class CinematicaIntro extends Phaser.Scene {
       .setOrigin(0.5, 0.5);
 
     const continuarButton = this.add
-      .sprite(400, 350, "seguir1")
+      .sprite(315, 340, "seguir1")
       .setInteractive();
 
     continuarButton.on("pointerup", () => {
