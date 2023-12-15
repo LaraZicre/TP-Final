@@ -8,10 +8,9 @@ Oso Goloso es un videojuego de plataformas educativo donde un pequeño oso llama
   <img src="https://github.com/LaraZicre/TP-Final/assets/128543912/6de6e01f-e65c-474c-ba08-2a725049dea2" alt="Logo">
 </p>
 
-<p align="center"> 
 Link para jugar: [ Oso Goloso ](https://larazicre.github.io/TP-Final/)
 
 Game Design Document: [ GDD ](https://docs.google.com/document/d/14l_sw9taphY00dJPxvOXCD3u2XSZV5fZZCQ3XHKHxLU/edit?usp=sharing)
 
 Technical Design Document: [ TDD ](https://docs.google.com/document/d/1V90qEYg5jOSrjxntbU8FDhGZAJWWhdVCFW6U7d9TA1U/edit?usp=sharing)
-</p>
+
