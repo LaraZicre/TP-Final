@@ -12,5 +12,5 @@ Link para jugar: [ Oso Goloso ](https://larazicre.github.io/TP-Final/)
 
 Game Design Document: [ GDD ](https://docs.google.com/document/d/14l_sw9taphY00dJPxvOXCD3u2XSZV5fZZCQ3XHKHxLU/edit?usp=sharing)
 
-Technical Design Document: [ TDD ](https://docs.google.com/document/d/1V90qEYg5jOSrjxntbU8FDhGZAJWWhdVCFW6U7d9TA1U/edit?usp=sharing)
+Technical Design Document: [ TDD ](https://docs.google.com/document/d/10MYzJK0W7FvjDPu-Sm06_sw9r4JyHxZgmf6IGG-k-Bk/edit?usp=sharing)
 
