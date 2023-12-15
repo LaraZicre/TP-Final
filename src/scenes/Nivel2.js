@@ -56,12 +56,12 @@ export default class Nivel2 extends Phaser.Scene {
     // Configurar el tamaño del cuadro de colisión del jugador
     this.oso.body.setSize(20, 60);
 
-    spawntPoint = map.findObject("objetos", (obj) => obj.name === "medialuna");
+    spawntPoint = map.findObject("objetos", (obj) => obj.name === "milanesa");
     console.log(spawntPoint);
-    this.medialuna = this.physics.add.sprite(
+    this.milanesa = this.physics.add.sprite(
       spawntPoint.x,
       spawntPoint.y,
-      "desayuno"
+      "comida"
     );
 
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -93,16 +93,16 @@ export default class Nivel2 extends Phaser.Scene {
       this
     );
 
-    //medialuna fisicas
-    this.medialuna.setDepth(1);
-    this.medialuna.setBounce(0.8);
+    //milanesa fisicas
+    this.milanesa.setDepth(1);
+    this.milanesa.setBounce(0.8);
     // colision
-    this.physics.add.collider(this.medialuna, capatablero);
-    this.physics.add.collider(this.medialuna, capatiles);
-    this.physics.add.collider(this.medialuna, capapisocaja);
+    this.physics.add.collider(this.milanesa, capatablero);
+    this.physics.add.collider(this.milanesa, capatiles);
+    this.physics.add.collider(this.milanesa, capapisocaja);
     this.physics.add.collider(
       this.oso,
-      this.medialuna,
+      this.milanesa,
       this.recolectarPremio,
       null,
       this
@@ -225,6 +225,7 @@ export default class Nivel2 extends Phaser.Scene {
     pausaButton.on("pointerup", () => {
       pausaButton.setTexture("pausa1");
       this.boton.play();
+      this.musica.pause();
       this.scene.pause("Nivel2");
       this.scene.launch("Pausa", {
         escenaActual: this.escenaActual,
@@ -295,7 +296,7 @@ export default class Nivel2 extends Phaser.Scene {
 
   recolectarPremio(cartasRecolectadas, oso) {
     //reproducir sonido
-    this.medialuna.destroy();
+    this.milanesa.destroy();
     this.nivelSuperado = true;
   }
 

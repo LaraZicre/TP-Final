@@ -140,6 +140,7 @@ export default class Nivel1 extends Phaser.Scene {
       .on("pointerup", () => {
         this.pausaButton.setTexture("pausa1");
         this.boton.play();
+        this.musica.pause();
         this.scene.pause("Nivel3");
         this.scene.launch("Pausa", {
           escenaActual: this.escenaActual,

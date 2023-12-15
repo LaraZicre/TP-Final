@@ -18,6 +18,10 @@ export default class Preload extends Phaser.Scene {
       this.load.image("candado2", "public/assets/images/Interfaz/candadoabierto.png");
       this.load.image("reloj", "public/assets/images/Interfaz/Reloj.png");
 
+      //cinematicas
+      this.load.image("cinematica1", "public/assets/images/Intro/cinematica1.png");
+      this.load.image("cinematica2", "public/assets/images/Intro/cinematica2.png");
+      this.load.image("cinematica3", "public/assets/images/Intro/cinematica3.png");
 
       //fondo menu
       this.load.image("menuFondo", "public/assets/images/Menu/fondomenu.png");
@@ -86,6 +90,9 @@ export default class Preload extends Phaser.Scene {
       //premio nivel 1
       this.load.image("desayuno", "public/assets/images/Food/medialuna.png");
 
+      //premio nivel 2
+      this.load.image("comida", "public/assets/images/Food/milanesa.png");
+
       //premios nivel 3
       this.load.image("postre1", "public/assets/images/Food/postre1.png");
       this.load.image("postre2", "public/assets/images/Food/postre2.png");
@@ -99,6 +106,7 @@ export default class Preload extends Phaser.Scene {
       this.load.audio("musicaNivel2", "public/assets/music/august_rain-future-8bit-Nivel2.mp3");
       this.load.audio("musicaNivel3", "public/assets/music/Lightyeartraxx-kim-lightyear-legends-Nivel3.mp3");
       this.load.audio("musicaCreditos", "public/assets/music/Lesiakower-waiting-time-Creditos.mp3");
+
 
       //SFX
       this.load.audio("boton", "public/assets/music/SFX/sfx-button-beep.mp3");

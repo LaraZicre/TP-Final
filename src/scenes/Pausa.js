@@ -43,8 +43,10 @@ export default class Pausa extends Phaser.Scene {
         this.musica.resume(this.escenaActual);
         this.scene.resume("Nivel1");
       } else if (this.escenaActual === "nivel2") {
+        this.musica.resume(this.escenaActual);
         this.scene.resume("Nivel2");
       } else if (this.escenaActual === "nivel3") {
+        this.musica.resume(this.escenaActual);
         this.scene.resume("Nivel3");
       }
     });

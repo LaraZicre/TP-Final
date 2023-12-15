@@ -45,7 +45,7 @@ export default class Menu extends Phaser.Scene {
       playpointer.setTexture("play3");
       this.boton.play();
       this.musica.stop({ loop: false });
-      this.scene.start("Nivel1");
+      this.scene.start("Creditos");
     });
   }
 
