@@ -184,7 +184,7 @@ export default class Preload extends Phaser.Scene {
     //spritesheet oso
     this.load.spritesheet(
       "oso",
-      "./public/assets/images/SpriteSheet/oso 40x60.png",
+      "public/assets/images/Spritesheet/oso-40x60.png",
       {
         frameWidth: 40,
         frameHeight: 60,
@@ -192,7 +192,7 @@ export default class Preload extends Phaser.Scene {
     );
     this.load.spritesheet(
       "osoJump",
-      "public/assets/images/Tutorial/osojump 40x120.png",
+      "public/assets/images/Tutorial/osojump-40x120.png",
       { frameWidth: 40, frameHeight: 120 }
     );
   }

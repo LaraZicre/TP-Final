@@ -10,17 +10,6 @@ export default class Tutorial extends Phaser.Scene {
   create() {
     this.add.image(496, 300, "tutoFondo").setScale(1.1);
 
-    this.textoPantallaCompleta = this.add.text(
-      208,
-      323,
-      "Presiona la tecla 'F' para jugar en pantalla completa",
-      {
-        fontFamily: "Pixellari",
-        fontSize: "25px",
-        fill: "#ff4db3",
-      }
-    );
-
     this.boton = this.sound.add("boton");
 
     // Boton volver
