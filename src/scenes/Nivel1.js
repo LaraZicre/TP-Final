@@ -6,6 +6,7 @@ export default class Nivel1 extends Phaser.Scene {
   init() {
     this.nivel = 1;
     this.dadosRecolectados = [];
+    this.abrirCandado = false;
     this.nivelSuperado = false;
     this.reintentarNivel = false;
     this.escenaActual = "nivel1";
@@ -34,11 +35,11 @@ export default class Nivel1 extends Phaser.Scene {
     const capapisocaja = map.createLayer("pisocaja", tablero, 0, 0);
     const capaobjetos = map.getObjectLayer("objetos");
 
-    const candado = this.add.sprite(838, 50, "candado1").setDepth(3);
+    this.candado = this.add.sprite(838, 50, "candado1").setDepth(3);
 
-    //configurar un evento personalizado llamado 'abrirCandado'
     this.events.on("abrirCandado", function () {
       candado.setTexture("candado2");
+      console.log("abrio candado: ", candado.texture);
     });
 
     //Load object for player from tiles
@@ -142,7 +143,7 @@ export default class Nivel1 extends Phaser.Scene {
     this.boton = this.sound.add("boton");
     this.salto = this.sound.add("salto");
     this.agarrar = this.sound.add("agarrar");
-    this.abrirCandado = this.sound.add("abrirCandado");
+    this.abrirCandadoSound = this.sound.add("abrirCandado");
     this.caerTablero = this.sound.add("sonidoTablero");
   }
 
@@ -242,8 +243,8 @@ export default class Nivel1 extends Phaser.Scene {
 
       if (sonIguales) {
         // Emitir el evento 'abrirCandado' cuando se cumple la condición
-        this.events.emit("abrirCandado");
-        this.abrirCandado.play();
+        this.abrirCandado = true;
+        this.abrirCandadoSound.play();
 
         // Si son iguales, desbloquea el premio
         capapisocaja.setCollisionByProperty({ colision: true }, false);
@@ -343,6 +344,10 @@ export default class Nivel1 extends Phaser.Scene {
       this.sound.play("salto");
       this.oso.anims.play("turn");
       this.oso.setVelocityY(-250);
+    }
+
+    if (this.abrirCandado) {
+      this.candado.setTexture("candado2");
     }
 
     if (this.nivelSuperado) {

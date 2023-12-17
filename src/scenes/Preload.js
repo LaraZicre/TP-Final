@@ -63,7 +63,7 @@ export default class Preload extends Phaser.Scene {
     //teclas tuto
     this.load.spritesheet(
       "tutoTeclas",
-      "public/assets/images/Tutorial/teclas 736x160.png",
+      "public/assets/images/Tutorial/teclas-736x160.png",
       { frameWidth: 736, frameHeight: 160 }
     );
 
@@ -180,7 +180,8 @@ export default class Preload extends Phaser.Scene {
     this.load.audio("ganarJuego", "public/assets/music/SFX/sfx-win-game.mp3");
 
     //tipografia
-    this.load.bitmapFont("Pixellari", "public/assets/fonts/Pixellari.ttf");
+    loadFont("Pixellari", "public/assets/fonts/Pixellari.ttf");
+
     //spritesheet oso
     this.load.spritesheet(
       "oso",
@@ -196,6 +197,7 @@ export default class Preload extends Phaser.Scene {
       { frameWidth: 40, frameHeight: 120 }
     );
   }
+
 
   create() {
     //animaciones caminar izquierda y derecha y quedarse quieto
@@ -223,4 +225,13 @@ export default class Preload extends Phaser.Scene {
   update() {
     this.scene.start("Intro");
   }
+}
+
+function loadFont(name, url) {
+  var newFont = new FontFace(name, `url(${url})`);
+  newFont.load().then(function (loaded) {
+      document.fonts.add(loaded);
+  }).catch(function (error) {
+      return error;
+  });
 }

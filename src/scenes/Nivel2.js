@@ -8,6 +8,7 @@ export default class Nivel2 extends Phaser.Scene {
   init() {
     this.cartasComparada = "";
     this.cartasRecolectadas = 0;
+    this.abrirCandado = false;
     this.nivelSuperado = false;
     this.reintentarNivel = false;
     this.escenaActual = "nivel2";
@@ -37,11 +38,7 @@ export default class Nivel2 extends Phaser.Scene {
 
     const capaobjetos = map.getObjectLayer("objetos");
 
-    const candado = this.add.sprite(496, 50, "candado1").setDepth(3);
-    // Configurar un evento personalizado llamado 'abrirCandado'
-    this.events.on("abrirCandado", function () {
-      candado.setTexture("candado2");
-    });
+    this.candado = this.add.sprite(496, 50, "candado1").setDepth(3);
 
     //Load object for player from tiles
     let spawntPoint = map.findObject("objetos", (obj) => obj.name === "oso");
@@ -239,7 +236,7 @@ export default class Nivel2 extends Phaser.Scene {
     this.boton = this.sound.add("boton");
     this.salto = this.sound.add("salto");
     this.agarrar = this.sound.add("agarrar");
-    this.abrirCandado = this.sound.add("abrirCandado");
+    this.abrirCandadoSound = this.sound.add("abrirCandado");
     this.caerTablero = this.sound.add("sonidoTablero");
   }
 
@@ -287,8 +284,8 @@ export default class Nivel2 extends Phaser.Scene {
     }
     if (this.cartasRecolectadas === 4) {
       // Emitir el evento 'abrirCandado' cuando se cumple la condición
-      this.events.emit("abrirCandado");
-      this.abrirCandado.play();
+      this.abrirCandado = true;
+      this.abrirCandadoSound.play();
       capapisocaja.setCollisionByProperty({ colision: true }, false);
     }
   }
@@ -326,6 +323,10 @@ export default class Nivel2 extends Phaser.Scene {
         this.oso.anims.play("turn");
         this.oso.setVelocityY(-330);
       }
+    }
+
+    if (this.abrirCandado) {
+      this.candado.setTexture("candado2");
     }
 
     if (this.nivelSuperado) {
