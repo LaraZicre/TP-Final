@@ -12,7 +12,7 @@ export default class Nivel2 extends Phaser.Scene {
     this.nivelSuperado = false;
     this.reintentarNivel = false;
     this.escenaActual = "nivel2";
-    this.moverOso = true;
+    this.detenerOso = true;
   }
 
   create() {
@@ -182,7 +182,7 @@ export default class Nivel2 extends Phaser.Scene {
           this.cartas.children.iterate((objeto) => {
             objeto.setTexture("cartareverso");
           });
-          this.moverOso = false;
+          this.detenerOso = false;
 
           // Elimina el texto del contador
           contadorTexto.destroy();
@@ -193,16 +193,6 @@ export default class Nivel2 extends Phaser.Scene {
       },
       callbackScope: this,
       loop: true, // Repetir el temporizador
-    });
-
-    // Pausa antes de voltear cartas
-    this.time.addEvent({
-      delay: 5000, // tiempo en milisegundos (en este caso, 5000 ms = 5 segundos)
-      callback: () => {
-        // Este código se ejecutará después de 5 segundos
-      },
-      // Esto significa que el evento se ejecutará solo una vez
-      loop: false,
     });
 
     const pausaButton = this.add.sprite(45, 55, "pausa1").setInteractive();
@@ -246,10 +236,13 @@ export default class Nivel2 extends Phaser.Scene {
   }
 
   recolectarCartas(oso, carta, capapisocaja) {
-    const tipoCarta = carta.name;
+    //Se guarda el nombre de la carta que recolecto
+    let tipoCarta = carta.name;
     carta.destroy();
     this.agarrar.play();
+    //Pregunta si hay alguna carta esperando ser comparada
     if (this.cartasComparada === "") {
+      //guarda la carta para compararla con la siguiente
       this.cartasComparada = tipoCarta;
       console.log("carta comparada despues del if: ", this.cartasComparada);
     } else {
@@ -276,7 +269,9 @@ export default class Nivel2 extends Phaser.Scene {
             break;
           }
         }
+        //si terminamos de comparar dos cartas reiniciamos la comparacion
         this.cartasComparada = "";
+        //contamos las cartas comparadas para saber cuantas nos faltan para ganar
         this.cartasRecolectadas++;
       } else {
         this.reintentarNivel = true;
@@ -297,7 +292,7 @@ export default class Nivel2 extends Phaser.Scene {
   }
 
   update() {
-    if (this.moverOso) {
+    if (this.detenerOso) {
       this.oso.setVelocity(0);
       this.oso.anims.play("turn");
     } else {

@@ -238,6 +238,7 @@ export default class Nivel1 extends Phaser.Scene {
 
     //para verificar se espera hasta recolectar todos los dados
     if (this.dadosRecolectados.length === 10) {
+      //compara las dos listas en forma de string
       var sonIguales =
         JSON.stringify(ordenDados) === JSON.stringify(this.dadosRecolectados);
 
@@ -354,6 +355,7 @@ export default class Nivel1 extends Phaser.Scene {
       this.musica.stop();
       this.scene.pause("Nivel1");
       this.scene.launch("NivelGanado", {
+        //traspaso de data de la escena actual a la escena de nivel superado
         escenaActual: this.escenaActual,
       });
     }
